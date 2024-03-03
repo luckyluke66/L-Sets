@@ -1,7 +1,6 @@
 module FuzzySet(
     FuzzySet(FuzzySet),
     CompleteResiduatedLattice,
-    L,
     membership,
     crop
     ) where

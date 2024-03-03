@@ -8,7 +8,6 @@ module MembershipFunctions(
     gaussian
 ) where
 
-import FuzzySet(L)
  
 -- use curring to construct functions 
 -- arguments a b c ... are constants for constructing specific functions 
