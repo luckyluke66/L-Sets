@@ -8,10 +8,11 @@ module MembershipFunctions(
     gaussian
 ) where
 
+import FuzzySet(L)
+ 
 -- use curring to construct functions 
 -- arguments a b c ... are constants for constructing specific functions 
 -- x is the variable for which membership is evaluated
-
 
 ensureBounds :: RealFloat a => a -> a
 ensureBounds x = max 0 (min 1 x)
@@ -37,7 +38,7 @@ triangular a b x =
 rectangular :: RealFloat a => a -> a -> a -> a -> a
 rectangular a b h x
     | x >= a && x <= b = ensureBounds h
-    | otherwise        = 0
+    | otherwise        = 0  
 
 trapezoid :: RealFloat a => a -> a -> a -> a -> a
 trapezoid a b c x 
