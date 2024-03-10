@@ -3,7 +3,7 @@ module Lattices.UnitInterval(
     mkUnitInterval
 ) where
 
-import Lattices.CompleteResiduatedLattice(CompleteResiduatedLattice(..))
+import Lattices.CompleteResiduatedLattice
 
 newtype UnitInterval = UnitInterval Double 
     deriving (Eq, Ord)

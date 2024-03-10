@@ -1,14 +1,7 @@
 module Main where
 
-import FuzzySet(FuzzySet(FuzzySet), membership, crop)
-import MembershipFunctions(
-    linear, 
-    triangular, 
-    gaussian, 
-    sigmoid, 
-    rectangular, 
-    trapezoid, 
-    constant)
+import FuzzySet
+import MembershipFunctions
 
 
 main :: IO ()

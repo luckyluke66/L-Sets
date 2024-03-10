@@ -4,8 +4,8 @@ module FuzzySet(
     crop
     ) where
 
-import Lattices.UnitInterval(UnitInterval, mkUnitInterval)
-import Lattices.CompleteResiduatedLattice(CompleteResiduatedLattice(..))
+import Lattices.UnitInterval
+import Lattices.CompleteResiduatedLattice
 
 newtype (CompleteResiduatedLattice l) => FuzzySet a l = FuzzySet (a -> l)
   

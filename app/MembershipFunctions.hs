@@ -13,9 +13,6 @@ import Lattices.UnitInterval (mkUnitInterval, UnitInterval)
 -- arguments a b c ... are constants for constructing specific functions 
 -- x is the variable for which membership is evaluated
 
-ensureBounds :: RealFloat a => a -> a
-ensureBounds x = max 0 (min 1 x)
-
 constant :: Double -> Double -> UnitInterval
 constant x y = mkUnitInterval x
 
