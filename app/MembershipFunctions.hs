@@ -7,8 +7,8 @@ module MembershipFunctions(
     trapezoid,
     gaussian
 ) where
+import Lattices.UnitInterval (mkUnitInterval, UnitInterval)
 
- 
 -- use curring to construct functions 
 -- arguments a b c ... are constants for constructing specific functions 
 -- x is the variable for which membership is evaluated
@@ -16,39 +16,39 @@ module MembershipFunctions(
 ensureBounds :: RealFloat a => a -> a
 ensureBounds x = max 0 (min 1 x)
 
-constant :: RealFloat a => a -> a
-constant = ensureBounds
+constant :: Double -> Double -> UnitInterval
+constant x y = mkUnitInterval x
 
-linear :: RealFloat a => a -> a -> a -> a 
+linear :: Double -> Double -> Double -> UnitInterval 
 linear a b x =
     let y = a * x + b
-    in ensureBounds y
+    in mkUnitInterval y
 
-sigmoid :: RealFloat a => a -> a -> a -> a -> a
+sigmoid :: Double -> Double -> Double -> Double -> UnitInterval
 sigmoid a b c x =
     let pow = -(a * x + b)
-    in  1 / (1 + (c ** pow))
+    in mkUnitInterval $ 1 / (1 + (c ** pow))
 
-triangular :: RealFloat a => a -> a -> a -> a
+triangular :: Double -> Double -> Double -> UnitInterval
 triangular a b x = 
     let y = 1 - abs (x - a) + b
-    in ensureBounds y
+    in mkUnitInterval y
 
-rectangular :: RealFloat a => a -> a -> a -> a -> a
+rectangular :: Double -> Double -> Double -> Double -> UnitInterval
 rectangular a b h x
-    | x >= a && x <= b = ensureBounds h
+    | x >= a && x <= b = mkUnitInterval h
     | otherwise        = 0  
 
-trapezoid :: RealFloat a => a -> a -> a -> a -> a
+trapezoid :: Double -> Double -> Double -> Double -> UnitInterval
 trapezoid a b c x 
     | x <= a || x >= c = 0
-    | x >= a && x <= b = ensureBounds ((x - a) / (b - a))
-    | x >= b && x <= c = ensureBounds ((c - x) / (c - b))
+    | x >= a && x <= b = mkUnitInterval ((x - a) / (b - a))
+    | x >= b && x <= c = mkUnitInterval ((c - x) / (c - b))
 
-gaussian :: RealFloat a => a -> a -> a -> a -> a
+gaussian :: Double -> Double -> Double -> Double -> UnitInterval
 gaussian a b c x =
     let e     = exp 1
         numer = (x + b) ** 2
         denom = 2 * (c ** 2)
         pow   = -(numer / denom)
-    in a * e**pow
+    in mkUnitInterval $ a * e**pow
