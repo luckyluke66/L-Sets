@@ -7,45 +7,47 @@ module MembershipFunctions(
     trapezoid,
     gaussian
 ) where
-import Lattices.UnitInterval (mkUnitInterval, UnitInterval)
+    
+import Lattices.UnitInterval
+import Lattices.CompleteResiduatedLattice
 
 -- use curring to construct functions 
 -- arguments a b c ... are constants for constructing specific functions 
 -- x is the variable for which membership is evaluated
 
-constant :: Double -> Double -> UnitInterval
-constant x y = mkUnitInterval x
+constant :: CompleteResiduatedLattice l => Double -> Double -> l
+constant x y = mkLattice x
 
-linear :: Double -> Double -> Double -> UnitInterval 
+linear :: CompleteResiduatedLattice l => Double -> Double -> Double -> l
 linear a b x =
     let y = a * x + b
-    in mkUnitInterval y
+    in mkLattice y
 
-sigmoid :: Double -> Double -> Double -> Double -> UnitInterval
+sigmoid :: CompleteResiduatedLattice l => Double -> Double -> Double -> Double -> l
 sigmoid a b c x =
     let pow = -(a * x + b)
-    in mkUnitInterval $ 1 / (1 + (c ** pow))
+    in mkLattice $ 1 / (1 + (c ** pow))
 
-triangular :: Double -> Double -> Double -> UnitInterval
+triangular :: CompleteResiduatedLattice l => Double -> Double -> Double -> l
 triangular a b x = 
     let y = 1 - abs (x - a) + b
-    in mkUnitInterval y
+    in mkLattice y
 
-rectangular :: Double -> Double -> Double -> Double -> UnitInterval
+rectangular :: CompleteResiduatedLattice l => Double -> Double -> Double -> Double -> l
 rectangular a b h x
-    | x >= a && x <= b = mkUnitInterval h
-    | otherwise        = 0  
+    | x >= a && x <= b = mkLattice h
+    | otherwise        = bot
 
-trapezoid :: Double -> Double -> Double -> Double -> UnitInterval
+trapezoid :: CompleteResiduatedLattice l => Double -> Double -> Double -> Double -> l
 trapezoid a b c x 
-    | x <= a || x >= c = 0
-    | x >= a && x <= b = mkUnitInterval ((x - a) / (b - a))
-    | x >= b && x <= c = mkUnitInterval ((c - x) / (c - b))
+    | x <= a || x >= c = bot
+    | x >= a && x <= b = mkLattice ((x - a) / (b - a))
+    | x >= b && x <= c = mkLattice ((c - x) / (c - b))
 
-gaussian :: Double -> Double -> Double -> Double -> UnitInterval
+gaussian :: CompleteResiduatedLattice l => Double -> Double -> Double -> Double -> l
 gaussian a b c x =
     let e     = exp 1
         numer = (x + b) ** 2
         denom = 2 * (c ** 2)
         pow   = -(numer / denom)
-    in mkUnitInterval $ a * e**pow
+    in mkLattice $ a * e**pow

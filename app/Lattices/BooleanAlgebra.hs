@@ -2,13 +2,17 @@ module Lattices.BooleanAlgebra where
 
 import Lattices.CompleteResiduatedLattice
 
-instance CompleteResiduatedLattice Bool where
+
+instance BoundedLattice Bool where 
     (/\) = min
     (\/) = max
-    inf = False
-    sup = True
-    residuum = implication 
-    tnorm a b = a && b
+    bot = False
+    top = True
+    mkLattice x = if x == 0 then bot else top
+
+instance CompleteResiduatedLattice Bool where
+    (-->) = implication 
+    tnorm = (&&)
 
 implication :: Bool -> Bool -> Bool
 implication True False = False

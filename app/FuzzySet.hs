@@ -15,11 +15,21 @@ membership (FuzzySet memFun) = memFun
 crop :: RealFloat a => a -> a
 crop x = fromInteger (round (x * (10^6))) / (10.0^^6)
 
-union :: RealFloat a => FuzzySet a UnitInterval -> FuzzySet a UnitInterval -> FuzzySet a UnitInterval
-union (FuzzySet x) (FuzzySet y) = FuzzySet (\z -> max (x z) (y z))
+union :: (RealFloat a, CompleteResiduatedLattice l) => FuzzySet a l -> FuzzySet a l -> FuzzySet a l
+union (FuzzySet f) (FuzzySet g) = FuzzySet (\x -> f x \/ g x)
 
-intersection :: RealFloat a => FuzzySet a UnitInterval -> FuzzySet a UnitInterval -> FuzzySet a UnitInterval
-intersection (FuzzySet x) (FuzzySet y) = FuzzySet (\z -> min (x z) (y z))
+intersection :: (RealFloat a, CompleteResiduatedLattice l) => FuzzySet a l -> FuzzySet a l -> FuzzySet a l
+intersection (FuzzySet f) (FuzzySet g) = FuzzySet (\x ->  f x /\ g x)
 
-complement :: RealFloat a => FuzzySet a UnitInterval -> FuzzySet a UnitInterval
+complement :: (RealFloat a, CompleteResiduatedLattice l, Num l) => FuzzySet a l -> FuzzySet a l
 complement (FuzzySet f) = FuzzySet (\x -> 1 - f x)
+
+gradedSubsethood :: CompleteResiduatedLattice l => [a] -> FuzzySet a l -> FuzzySet a l -> l
+gradedSubsethood = gradedOperation (-->)
+
+gradedEqality :: CompleteResiduatedLattice l => [a] -> FuzzySet a l -> FuzzySet a l -> l
+gradedEqality = gradedOperation (<-->)
+
+gradedOperation :: CompleteResiduatedLattice l => (l -> l -> l) -> [a] -> FuzzySet a l -> FuzzySet a l -> l
+gradedOperation op interval (FuzzySet f) (FuzzySet g) = 
+    foldr (/\) bot $ zipWith op (map f interval) (map g interval)
