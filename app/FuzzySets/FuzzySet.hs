@@ -1,4 +1,4 @@
-module FuzzySet(
+module FuzzySets.FuzzySet(
     FuzzySet(FuzzySet),
     membership,
     crop
