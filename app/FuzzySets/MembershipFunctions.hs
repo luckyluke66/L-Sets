@@ -1,4 +1,4 @@
-module MembershipFunctions(
+module FuzzySets.MembershipFunctions(
     constant, 
     linear, 
     sigmoid, 

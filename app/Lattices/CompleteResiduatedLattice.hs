@@ -3,6 +3,7 @@ module Lattices.CompleteResiduatedLattice(
     BoundedLattice(..),
 ) where
 
+
 type Nat = Int
 
 class BoundedLattice l where
