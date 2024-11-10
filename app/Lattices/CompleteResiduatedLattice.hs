@@ -6,7 +6,7 @@ module Lattices.CompleteResiduatedLattice(
 
 type Nat = Int
 
-class BoundedLattice l where
+class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l where
     (/\), (\/) :: l -> l -> l
     top, bot :: l
     mkLattice :: Double -> l

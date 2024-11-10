@@ -1,6 +1,7 @@
 module FuzzySets.FuzzySet(
     FuzzySet(FuzzySet),
     membership,
+    universe,
     crop,
     union, 
     intersection,
@@ -12,19 +13,21 @@ module FuzzySets.FuzzySet(
 import Lattices.UnitInterval
 import Lattices.CompleteResiduatedLattice
 
+
 data (CompleteResiduatedLattice l) => FuzzySet a l = FuzzySet
     { membershipFunction :: a -> l
-    , universe :: ![a]
+    , universeSet :: ![a]
     }
 
 
 membership :: (CompleteResiduatedLattice l) => FuzzySet a l -> a -> l
 membership (FuzzySet f _) = f
 
+universe :: (CompleteResiduatedLattice l) => FuzzySet a l -> [a]
+universe (FuzzySet _ u) = u
 
 crop :: RealFloat a => a -> a
 crop x = fromInteger (round (x * (10^6))) / (10.0^^6)
-
 
 union :: (RealFloat a, CompleteResiduatedLattice l) => FuzzySet a l -> FuzzySet a l -> FuzzySet a l
 union (FuzzySet f u) (FuzzySet g _) = FuzzySet (\x -> f x \/ g x) u
