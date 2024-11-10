@@ -28,12 +28,12 @@ executable fuzzySets
     other-modules:
         FuzzySets.FuzzySet
         FuzzySets.MembershipFunctions
+        FuzzySets.Cardinality
         FuzzyRelations.FuzzyRelation
         FuzzyRelations.MembershipFunctions
         FuzzyRelations.RelationComposition
         Lattices.CompleteResiduatedLattice
         Lattices.UnitInterval
-        Lattices.BooleanAlgebra
         Lattices.UnitInterval
         Lattices.UnitIntervalStructures.Godel
         Lattices.UnitIntervalStructures.Lukasiewicz
