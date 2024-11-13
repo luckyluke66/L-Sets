@@ -11,7 +11,7 @@ module FuzzySets.MembershipFunctions(
 import Lattices.UnitInterval
 import Lattices.CompleteResiduatedLattice
 
--- use curring to construct functions 
+-- use currying to construct functions 
 -- arguments a b c ... are constants for constructing specific functions 
 -- x is the variable for which membership is evaluated
 
