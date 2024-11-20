@@ -1,10 +1,12 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module Lattices.UnitIntervalStructures.Godel(UIGodel(UIGodel)) where
 
 import Lattices.CompleteResiduatedLattice
 import Lattices.UnitInterval
 
 newtype UIGodel = UIGodel UnitInterval 
-    deriving (Eq, Ord)
+    deriving (Eq, Ord, Num, Real, RealFrac, Fractional)
 
 instance BoundedLattice UIGodel where
     (/\) (UIGodel x) (UIGodel y) = UIGodel (x /\ y)
