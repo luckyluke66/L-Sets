@@ -1,5 +1,3 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
 module FuzzyRelations.FuzzyRelation (
     FuzzyRelation(FuzzyRelation),
     membership,
