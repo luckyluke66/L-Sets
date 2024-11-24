@@ -2,7 +2,7 @@ module FuzzyRelations.MembershipFunctions (
     isCloseTo
 ) where
 
-import Lattices.CompleteResiduatedLattice
+import Lattices.ResiduatedLattice
 
-isCloseTo :: CompleteResiduatedLattice l => (Double, Double) -> l
+isCloseTo :: ResiduatedLattice l => (Double, Double) -> l
 isCloseTo (x, y) = mkLattice $ max 0 (1 - abs (x - y))

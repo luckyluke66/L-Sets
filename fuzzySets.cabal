@@ -32,7 +32,7 @@ executable fuzzySets
         FuzzyRelations.FuzzyRelation
         FuzzyRelations.MembershipFunctions
         FuzzyRelations.RelationComposition
-        Lattices.CompleteResiduatedLattice
+        Lattices.ResiduatedLattice
         Lattices.UnitInterval
         Lattices.UnitInterval
         Lattices.UnitIntervalStructures.Godel

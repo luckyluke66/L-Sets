@@ -5,7 +5,7 @@ module Lattices.UnitInterval(
     mkUnitInterval
 ) where
 
-import Lattices.CompleteResiduatedLattice
+import Lattices.ResiduatedLattice
 
 newtype UnitInterval = UnitInterval Double 
     deriving (Eq, Ord, Num, Real, RealFrac, Fractional)

@@ -2,7 +2,7 @@
 
 module Lattices.UnitIntervalStructures.Godel(UIGodel(UIGodel)) where
 
-import Lattices.CompleteResiduatedLattice
+import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
 
 newtype UIGodel = UIGodel UnitInterval 
@@ -18,7 +18,7 @@ instance BoundedLattice UIGodel where
         | x >= 1 = top
         | otherwise = UIGodel (mkUnitInterval x)
 
-instance CompleteResiduatedLattice UIGodel where
+instance ResiduatedLattice UIGodel where
     tnorm x y = x /\ y
     (-->)  = godelResiduum
 

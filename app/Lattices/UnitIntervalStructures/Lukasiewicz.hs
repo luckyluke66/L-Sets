@@ -2,7 +2,7 @@
 
 module Lattices.UnitIntervalStructures.Lukasiewicz(UILukasiewicz(UILukasiewicz)) where
 
-import Lattices.CompleteResiduatedLattice
+import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
 
 newtype UILukasiewicz = UILukasiewicz UnitInterval 
@@ -18,7 +18,7 @@ instance BoundedLattice UILukasiewicz where
         | x >= 1 = top
         | otherwise = UILukasiewicz (mkUnitInterval x)
 
-instance CompleteResiduatedLattice UILukasiewicz where
+instance ResiduatedLattice UILukasiewicz where
     tnorm a b = a + b - top \/ bot
     a --> b = top - a + b /\ top
 

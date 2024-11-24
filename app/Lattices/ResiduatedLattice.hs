@@ -1,5 +1,5 @@
-module Lattices.CompleteResiduatedLattice(
-    CompleteResiduatedLattice(..),
+module Lattices.ResiduatedLattice(
+    ResiduatedLattice(..),
     BoundedLattice(..),
 ) where
 
@@ -11,7 +11,7 @@ class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l
     top, bot :: l
     mkLattice :: Double -> l
 
-class BoundedLattice l => CompleteResiduatedLattice l where
+class BoundedLattice l => ResiduatedLattice l where
     (-->), (<--), tnorm, (<-->) :: l -> l -> l
     a <--> b = a --> b /\ b --> a
     negation :: l -> l
