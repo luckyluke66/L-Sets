@@ -32,13 +32,9 @@ executable fuzzySets
         FuzzyRelations.FuzzyRelation
         FuzzyRelations.MembershipFunctions
         FuzzyRelations.RelationComposition
-<<<<<<< HEAD
-        Lattices.ResiduatedLattice
-=======
         FuzzyRelations.Properties
-        Lattices.CompleteResiduatedLattice
->>>>>>> d6cddc1 (fuzzy relation properties)
-        Lattices.UnitInterval
+        Lattices.ResiduatedLattice
+        Lattices.ResiduatedLattice
         Lattices.UnitInterval
         Lattices.UnitIntervalStructures.Godel
         Lattices.UnitIntervalStructures.Lukasiewicz
