@@ -1,11 +1,12 @@
 module FuzzyRelations.FuzzyRelation (
     FuzzyRelation(FuzzyRelation),
+    membership,
+    alphaCut
 ) where
 
-import Lattices.CompleteResiduatedLattice
-import FuzzySets.FuzzySet
+import Lattices.ResiduatedLattice
 
-data (CompleteResiduatedLattice l) => FuzzyRelation a l =  FuzzyRelation
+data (ResiduatedLattice         l) => FuzzyRelation a l =  FuzzyRelation
     { membershipFunction :: a -> a -> l
     , universe :: ![a]
     }
@@ -14,5 +15,8 @@ data (CompleteResiduatedLattice l) => FuzzyRelation a l =  FuzzyRelation
     -- this way we can represent the relation with one universal set
     -- so we have R: U x U -> L
 
-membership ::(CompleteResiduatedLattice l) => FuzzyRelation a l -> a -> a -> l
+membership ::(ResiduatedLattice l) => FuzzyRelation a l -> a -> a -> l
 membership (FuzzyRelation f u) = f
+
+alphaCut :: (ResiduatedLattice l) => l -> FuzzyRelation a l -> [a]
+alphaCut alpha (FuzzyRelation f u) = [x | x <- u, y <- u, f x y >= alpha]

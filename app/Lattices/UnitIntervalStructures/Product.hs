@@ -2,7 +2,7 @@
 
 module Lattices.UnitIntervalStructures.Product(UIProduct(UIProduct)) where
 
-import Lattices.CompleteResiduatedLattice
+import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
 
 newtype UIProduct = UIProduct UnitInterval 
@@ -18,7 +18,7 @@ instance BoundedLattice UIProduct where
         | x >= 1 = top
         | otherwise = UIProduct (mkUnitInterval x)
 
-instance CompleteResiduatedLattice UIProduct where
+instance ResiduatedLattice UIProduct where
     tnorm x y = x * y
     a --> b = if a <= b then top else a / b 
 
