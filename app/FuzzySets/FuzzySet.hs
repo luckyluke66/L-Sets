@@ -14,7 +14,7 @@ module FuzzySets.FuzzySet(
 import Data.Maybe
 import Lattices.UnitInterval
 import Lattices.ResiduatedLattice
-
+import FuzzyStructure
 
 data (ResiduatedLattice l) => FuzzySet a l = FuzzySet
     { membershipFunction :: a -> l
@@ -25,6 +25,9 @@ instance (Show a, Show l, ResiduatedLattice l) => Show (FuzzySet a l) where
     show :: (Show a, Show l, ResiduatedLattice l) => FuzzySet a l -> String
     show (FuzzySet f u) = "FuzzySet { " ++ show [(x, f x) | x <- u] ++ " }"
 
+instance FuzzyStructure FuzzySet where
+    membership (FuzzySet f _) = f
+    universe (FuzzySet _ u) = u
 
 fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> FuzzySet a l
 fromPairs xs = FuzzySet f u
@@ -35,11 +38,7 @@ fromPairs xs = FuzzySet f u
 fromFunction :: (ResiduatedLattice l) => (a -> l) -> [a] -> FuzzySet a l
 fromFunction = FuzzySet
 
-membership :: (ResiduatedLattice l) => FuzzySet a l -> a -> l
-membership (FuzzySet f _) = f
 
-universe :: (ResiduatedLattice l) => FuzzySet a l -> [a]
-universe (FuzzySet _ u) = u
 
 crop :: RealFloat a => a -> a
 crop x = fromInteger (round (x * (10^6))) / (10.0^^6)

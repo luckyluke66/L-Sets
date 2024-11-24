@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module FuzzyRelations.FuzzyRelation (
     FuzzyRelation(FuzzyRelation),
     membership,
@@ -8,10 +7,12 @@ module FuzzyRelations.FuzzyRelation (
 import Lattices.ResiduatedLattice
 import Data.List
 import Data.Maybe
+import FuzzyStructure
 
 
-data (ResiduatedLattice l) => FuzzyRelation a l =  FuzzyRelation
-    { membershipFunction :: (a, a) -> l
+
+data (ResiduatedLattice l) => FuzzyRelation a l  =  FuzzyRelation
+    { membershipFunction :: a -> l
     , universeSet :: ![a]
     }
     -- normally fuzzy relation is function R: X x Y -> L 
@@ -26,6 +27,10 @@ instance (Show a, Show l, ResiduatedLattice l) => Show (FuzzyRelation a l) where
     in  "FuzzyRelation {\n"
         ++ "  Memberships: " ++ show memberships ++ "\n"
         ++ "\n}"
+
+instance FuzzyStructure FuzzyRelation where
+    membership (FuzzyRelation f _ _) = f
+    universe (FuzzyRelation _ u _) = u
 
 fromTriplet :: (ResiduatedLattice l, Eq a) => [(a, a, l)] -> FuzzyRelation a l
 fromTriplet triplets = FuzzyRelation f u
