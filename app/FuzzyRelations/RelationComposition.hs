@@ -22,5 +22,5 @@ square :: (ResiduatedLattice l) => FuzzyRelation a l -> FuzzyRelation a l -> Fuz
 square = composition top (/\) (<-->)
 
 composition :: (ResiduatedLattice l) => l -> (l -> l -> l) -> (l -> l -> l) -> FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-composition unit latOp op (FuzzyRelation r universe) (FuzzyRelation s _) = FuzzyRelation composed universe
-    where composed x z = foldr latOp unit [r x y `op` s y z | y <- universe]
+composition unit latOp op (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composed universe eq
+    where composed (x, z) = foldr latOp unit [r (x, y) `op` s (y, z) | y <- universe]

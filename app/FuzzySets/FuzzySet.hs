@@ -3,7 +3,7 @@ module FuzzySets.FuzzySet(
     membership,
     universe,
     crop,
-    union, 
+    union,
     intersection,
     complement,
     gradedSubsethood,
@@ -46,7 +46,7 @@ gradedEquality :: ResiduatedLattice l => FuzzySet a l -> FuzzySet a l -> l
 gradedEquality = gradedOperation (<-->)
 
 gradedOperation :: ResiduatedLattice l => (l -> l -> l) -> FuzzySet a l -> FuzzySet a l -> l
-gradedOperation op (FuzzySet f u) (FuzzySet g _) = 
+gradedOperation op (FuzzySet f u) (FuzzySet g _) =
     foldr (/\) bot $ zipWith op (map f u) (map g u)
 
 alphaCut :: (ResiduatedLattice l) => l -> FuzzySet a l -> [a]
