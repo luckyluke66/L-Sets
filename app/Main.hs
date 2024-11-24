@@ -1,6 +1,6 @@
 module Main where
 
-import FuzzySets.FuzzySet
+import FuzzySets.FuzzySet ( universe, membership, FuzzySet(..) )
 import FuzzySets.MembershipFunctions
 import FuzzySets.Cardinality
 import Lattices.UnitInterval
