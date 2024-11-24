@@ -32,6 +32,7 @@ executable fuzzySets
         FuzzyRelations.FuzzyRelation
         FuzzyRelations.MembershipFunctions
         FuzzyRelations.RelationComposition
+        FuzzyRelations.Properties
         Lattices.CompleteResiduatedLattice
         Lattices.UnitInterval
         Lattices.UnitInterval
