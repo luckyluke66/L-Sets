@@ -5,6 +5,8 @@ module FuzzyRelations.FuzzyRelation (
 ) where
 
 import Lattices.ResiduatedLattice
+import Data.List
+import Data.Maybe
 
 
 data (ResiduatedLattice l) => FuzzyRelation a l =  FuzzyRelation
@@ -16,6 +18,21 @@ data (ResiduatedLattice l) => FuzzyRelation a l =  FuzzyRelation
     -- but we can create any type U =  X | Y
     -- this way we can represent the relation with one universal set
     -- so we have R: U x U -> L
+
+fromTriplet :: (ResiduatedLattice l, Eq a) => [(a, a, l)] -> (a -> a -> l) -> FuzzyRelation a l
+fromTriplet triplets = FuzzyRelation f u
+    where u = map (\(x, _, _) -> x) triplets
+          f (x, y) = head [z | (a, b, z) <- triplets, a == x, b == y]
+
+fromMatrix :: (ResiduatedLattice l, Eq a) => [[l]] -> [a] -> (a -> a -> l) -> FuzzyRelation a l
+fromMatrix matrix universe = FuzzyRelation f universe
+    where f (x, y) = 
+            let i = fromJust $ elemIndex x universe
+                j = fromJust $ elemIndex y universe
+            in matrix !! i !! j
+
+fromFunction :: (ResiduatedLattice l) => ((a, a) -> l) -> [a] -> (a -> a -> l) -> FuzzyRelation a l
+fromFunction = FuzzyRelation 
 
 membership :: (ResiduatedLattice l) => FuzzyRelation a l -> (a, a) -> l
 membership (FuzzyRelation f _ _) = f

@@ -9,6 +9,7 @@ module FuzzySets.FuzzySet(
     alphaCut,
 ) where
 
+import Data.Maybe
 import Lattices.UnitInterval
 import Lattices.ResiduatedLattice
 
@@ -18,6 +19,14 @@ data (ResiduatedLattice l) => FuzzySet a l = FuzzySet
     , universeSet :: ![a]
     }
 
+fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> FuzzySet a l
+fromPairs xs = FuzzySet f u
+    where
+        f x = fromMaybe bot (lookup x xs)
+        u = map fst xs
+
+fromFunction :: (ResiduatedLattice l) => (a -> l) -> [a] -> FuzzySet a l
+fromFunction = FuzzySet
 
 membership :: (ResiduatedLattice l) => FuzzySet a l -> a -> l
 membership (FuzzySet f _) = f
