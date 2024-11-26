@@ -10,17 +10,19 @@ import Lattices.ResiduatedLattice
 
 
 circlet :: (ResiduatedLattice l) =>  FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-circlet = composition bot (\/) tnorm
+circlet (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composition universe eq
+    where composition (x, z) = foldr (\/) bot [r (x, y) `tnorm` s (y, z) | y <- universe ]
+
 
 subproduct :: (ResiduatedLattice l) => FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-subproduct = composition top (/\) (-->)
+subproduct (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composition universe eq
+    where composition (x, z) = foldr (/\) top [r (x, y) --> s (y, z) | y <- universe]
 
 superproduct :: (ResiduatedLattice l) => FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-superproduct = composition top (/\) (<--)
+superproduct (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composition universe eq
+    where composition (x, z) = foldr (/\) bot [r (x, y) <-- s (y, z) | y <- universe]
 
 square :: (ResiduatedLattice l) => FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-square = composition top (/\) (<-->)
+square (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composition universe eq
+    where composition (x, z) = foldr (/\) bot [r (x, y) <--> s (y, z) | y <- universe ]
 
-composition :: (ResiduatedLattice l) => l -> (l -> l -> l) -> (l -> l -> l) -> FuzzyRelation a l -> FuzzyRelation a l -> FuzzyRelation a l
-composition unit latOp op (FuzzyRelation r universe eq) (FuzzyRelation s _ _) = FuzzyRelation composed universe eq
-    where composed (x, z) = foldr latOp unit [r (x, y) `op` s (y, z) | y <- universe]
