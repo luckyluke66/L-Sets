@@ -1,4 +1,4 @@
-module Properties (
+module FuzzySets.Properties (
     isEmpty,
     isCrisp,
     isUniversal,
@@ -6,19 +6,22 @@ module Properties (
     gradedEquality,
 ) where
 
-isEmpty :: (ResiduatedLattice l) => FuzzySet -> l
+import FuzzySets.FuzzySet
+import Lattices.ResiduatedLattice 
+
+isEmpty :: (ResiduatedLattice l) => FuzzySet a l -> l
 isEmpty (FuzzySet f u)
     | x == top = top
     | otherwise = bot 
-    where  = foldr (/\) top [f x | x <- u]
+    where  x= foldr (/\) top [f x | x <- u]
 
-isCrisp :: (ResiduatedLattice l) => FuzzySet -> l
+isCrisp :: (ResiduatedLattice l) => FuzzySet a l -> l
 isCrisp (FuzzySet f u)
     | crisp = top
     | otherwise = bot 
     where crisp = all (\x -> x == top || x == bot) [f x | x <- u]
 
-isUniversal :: (ResiduatedLattice l) => FuzzySet -> l
+isUniversal :: (ResiduatedLattice l) => FuzzySet a l -> l
 isUniversal (FuzzySet f u)
     | universal = top
     | otherwise = bot 
