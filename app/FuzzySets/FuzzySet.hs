@@ -1,3 +1,5 @@
+{-# LANGUAGE InstanceSigs #-}
+
 module FuzzySets.FuzzySet(
     FuzzySet(FuzzySet),
     membership,
@@ -18,6 +20,11 @@ data (ResiduatedLattice l) => FuzzySet a l = FuzzySet
     { membershipFunction :: a -> l
     , universeSet :: ![a]
     }
+
+instance (Show a, Show l, ResiduatedLattice l) => Show (FuzzySet a l) where
+    show :: (Show a, Show l, ResiduatedLattice l) => FuzzySet a l -> String
+    show (FuzzySet f u) = "FuzzySet { " ++ show [(x, f x) | x <- u] ++ " }"
+
 
 fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> FuzzySet a l
 fromPairs xs = FuzzySet f u

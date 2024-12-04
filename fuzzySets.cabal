@@ -29,7 +29,7 @@ executable fuzzySets
         FuzzySets.FuzzySet
         FuzzySets.MembershipFunctions
         FuzzySets.Cardinality
-        FUzzySets.Properties
+        FuzzySets.Properties
         FuzzyRelations.FuzzyRelation
         FuzzyRelations.MembershipFunctions
         FuzzyRelations.RelationComposition
