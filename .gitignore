@@ -1,3 +1,4 @@
 /dist-newstyle
 /.vscode
 /text
+app/Main.hs
