@@ -12,7 +12,7 @@ import FuzzyStructure
 
 
 data (ResiduatedLattice l) => FuzzyRelation a l  =  FuzzyRelation
-    { membershipFunction :: a -> l
+    { membershipFunction :: (a, a) -> l
     , universeSet :: ![a]
     }
     -- normally fuzzy relation is function R: X x Y -> L 
@@ -29,8 +29,8 @@ instance (Show a, Show l, ResiduatedLattice l) => Show (FuzzyRelation a l) where
         ++ "\n}"
 
 instance FuzzyStructure FuzzyRelation where
-    membership (FuzzyRelation f _ _) = f
-    universe (FuzzyRelation _ u _) = u
+    membership (FuzzyRelation f _) = f
+    universe (FuzzyRelation _ u) = u
 
 fromTriplet :: (ResiduatedLattice l, Eq a) => [(a, a, l)] -> FuzzyRelation a l
 fromTriplet triplets = FuzzyRelation f u
@@ -48,7 +48,7 @@ fromFunction :: (ResiduatedLattice l) => ((a, a) -> l) -> [a] -> FuzzyRelation a
 fromFunction = FuzzyRelation
 
 membership :: (ResiduatedLattice l) => FuzzyRelation a l -> (a, a) -> l
-membership (FuzzyRelation f _ ) = f
+membership (FuzzyRelation f _) = f
 
 equality :: (ResiduatedLattice l) => (a -> l) -> a -> a -> l
 equality f x y = f x <--> f y
