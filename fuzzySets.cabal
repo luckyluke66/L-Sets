@@ -40,7 +40,7 @@ executable fuzzySets
         Lattices.UnitIntervalStructures.Godel
         Lattices.UnitIntervalStructures.Lukasiewicz
         Lattices.UnitIntervalStructures.Product
-
+        FuzzyStructure
     --LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    
