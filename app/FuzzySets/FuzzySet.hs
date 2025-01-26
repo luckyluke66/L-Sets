@@ -1,20 +1,21 @@
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
 module FuzzySets.FuzzySet(
     FuzzySet(FuzzySet),
-    membership,
-    universe,
     crop,
     union,
     intersection,
     complement,
     alphaCut,
+    LSet(member)
 ) where
 
-import Data.Maybe
 import Lattices.UnitInterval
 import Lattices.ResiduatedLattice
-import FuzzyStructure
+import LSet
+import Data.Maybe(fromMaybe)
 
 data (ResiduatedLattice l) => FuzzySet a l = FuzzySet
     { membershipFunction :: a -> l
@@ -25,8 +26,10 @@ instance (Show a, Show l, ResiduatedLattice l) => Show (FuzzySet a l) where
     show :: (Show a, Show l, ResiduatedLattice l) => FuzzySet a l -> String
     show (FuzzySet f u) = "FuzzySet { " ++ show [(x, f x) | x <- u] ++ " }"
 
-instance FuzzyStructure FuzzySet where
-    membership (FuzzySet f _) = f
+instance (ResiduatedLattice l, Eq a) => LSet (FuzzySet a l) a l where
+    member :: ResiduatedLattice l => FuzzySet a l -> a -> l
+    member (FuzzySet f _) = f 
+    universe :: ResiduatedLattice l => FuzzySet a l -> [a]
     universe (FuzzySet _ u) = u
 
 fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> FuzzySet a l

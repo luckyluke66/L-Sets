@@ -26,6 +26,8 @@ executable fuzzySets
 
     -- Modules included in this executable, other than Main.
     other-modules:
+        LSet
+        Utils.Utils
         FuzzySets.FuzzySet
         FuzzySets.MembershipFunctions
         FuzzySets.Cardinality
@@ -44,6 +46,7 @@ executable fuzzySets
     --LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    
-        base ^>=4.16.4.0
+        base ^>=4.16.4.0,
+        containers^>=0.6.5.1
     hs-source-dirs:   app
     default-language: Haskell2010
