@@ -2,7 +2,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-module FuzzySets.LSet(
+module Fuzzy.Sets.LSet(
     LSet(LSet),
     crop,
     union,

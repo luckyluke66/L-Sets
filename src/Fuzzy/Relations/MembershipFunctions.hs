@@ -1,4 +1,4 @@
-module FuzzyRelations.MembershipFunctions (
+module Fuzzy.Relations.MembershipFunctions (
     isCloseTo
 ) where
 

@@ -1,11 +1,11 @@
-module FuzzyRelations.RelationComposition (
+module Fuzzy.Relations.RelationComposition (
     circlet,
     subproduct,
     superproduct,
     square,
 ) where
 
-import FuzzyRelations.LRelation
+import Fuzzy.Relations.LRelation
 import Lattices.ResiduatedLattice
 import Utils.Utils
 

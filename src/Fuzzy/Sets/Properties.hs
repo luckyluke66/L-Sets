@@ -1,4 +1,4 @@
-module FuzzySets.Properties (
+module Fuzzy.Sets.Properties (
     isEmpty,
     isCrisp,
     isUniversal,
@@ -6,7 +6,7 @@ module FuzzySets.Properties (
     gradedEquality,
 ) where
 
-import FuzzySets.LSet
+import Fuzzy.Sets.LSet
 import Lattices.ResiduatedLattice 
 
 isEmpty :: (ResiduatedLattice l) => LSet a l -> l

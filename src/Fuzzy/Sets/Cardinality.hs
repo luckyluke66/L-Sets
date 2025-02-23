@@ -1,4 +1,4 @@
-module FuzzySets.Cardinality(
+module Fuzzy.Sets.Cardinality(
     sigmaCount,
     thresholdSigmaCount,
     normalizedSigmaCount,
@@ -11,7 +11,7 @@ module FuzzySets.Cardinality(
 ) where 
 
 import Lattices.ResiduatedLattice
-import FuzzySets.LSet
+import Fuzzy.Sets.LSet
 
 
 sigmaCount :: (ResiduatedLattice l) => LSet a l -> Double

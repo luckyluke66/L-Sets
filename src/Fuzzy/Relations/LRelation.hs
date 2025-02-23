@@ -2,7 +2,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE InstanceSigs #-}
 
-module FuzzyRelations.LRelation (
+module Fuzzy.Relations.LRelation (
     LRelation(LRelation),
     FuzzySet(..),
 ) where

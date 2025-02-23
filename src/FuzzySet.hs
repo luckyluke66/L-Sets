@@ -4,7 +4,7 @@ module FuzzySet(FuzzySet(..)) where
 
 import Lattices.ResiduatedLattice
 
-
+-- | Type class defines the basic behavior for a fuzzy set 
 class (ResiduatedLattice l) => FuzzySet set a l | set -> a l where
     member :: set -> a -> l
     universe :: set -> [a]

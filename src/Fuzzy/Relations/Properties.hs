@@ -1,4 +1,4 @@
-module FuzzyRelations.Properties (
+module Fuzzy.Relations.Properties (
     ref,
     sym,
     tra,
@@ -6,7 +6,7 @@ module FuzzyRelations.Properties (
     asym,
 ) where
 
-import FuzzyRelations.LRelation
+import Fuzzy.Relations.LRelation
 import Lattices.ResiduatedLattice
 import Utils.Utils(universeToList)
 
