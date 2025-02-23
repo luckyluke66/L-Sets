@@ -10,6 +10,7 @@ class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l
     (/\), (\/) :: l -> l -> l
     top, bot :: l
     mkLattice :: Double -> l
+    -- proc jsou tam vsechny classy? 
 
 class BoundedLattice l => ResiduatedLattice l where
     (-->), (<--), tnorm, (<-->) :: l -> l -> l
@@ -19,5 +20,5 @@ class BoundedLattice l => ResiduatedLattice l where
     
     power :: l -> Nat -> l
     power a 0 = top
-    power a n = a /\ power a (n - 1)
+    power a n = a /\ power a (n - 1) -- je to spravne /\?
     a <-- b = b --> a

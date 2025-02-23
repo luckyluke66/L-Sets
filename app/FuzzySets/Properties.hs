@@ -6,33 +6,33 @@ module FuzzySets.Properties (
     gradedEquality,
 ) where
 
-import FuzzySets.FuzzySet
+import FuzzySets.LSet
 import Lattices.ResiduatedLattice 
 
-isEmpty :: (ResiduatedLattice l) => FuzzySet a l -> l
-isEmpty (FuzzySet f u)
+isEmpty :: (ResiduatedLattice l) => LSet a l -> l
+isEmpty (LSet f u)
     | x == top = top
     | otherwise = bot 
-    where  x= foldr (/\) top [f x | x <- u]
+    where  x = foldr (/\) top [f x | x <- u]
 
-isCrisp :: (ResiduatedLattice l) => FuzzySet a l -> l
-isCrisp (FuzzySet f u)
+isCrisp :: (ResiduatedLattice l) => LSet a l -> l
+isCrisp (LSet f u)
     | crisp = top
     | otherwise = bot 
     where crisp = all (\x -> x == top || x == bot) [f x | x <- u]
 
-isUniversal :: (ResiduatedLattice l) => FuzzySet a l -> l
-isUniversal (FuzzySet f u)
+isUniversal :: (ResiduatedLattice l) => LSet a l -> l
+isUniversal (LSet f u)
     | universal = top
     | otherwise = bot 
     where universal = all (== top) [f x | x <- u]
 
-gradedSubsethood :: ResiduatedLattice l => FuzzySet a l -> FuzzySet a l -> l
+gradedSubsethood :: ResiduatedLattice l => LSet a l -> LSet a l -> l
 gradedSubsethood = gradedOperation (-->)
 
-gradedEquality :: ResiduatedLattice l => FuzzySet a l -> FuzzySet a l -> l
+gradedEquality :: ResiduatedLattice l => LSet a l -> LSet a l -> l
 gradedEquality = gradedOperation (<-->)
 
-gradedOperation :: ResiduatedLattice l => (l -> l -> l) -> FuzzySet a l -> FuzzySet a l -> l
-gradedOperation op (FuzzySet f u) (FuzzySet g _) =
+gradedOperation :: ResiduatedLattice l => (l -> l -> l) -> LSet a l -> LSet a l -> l
+gradedOperation op (LSet f u) (LSet g _) =
     foldr (/\) bot $ zipWith op (map f u) (map g u)

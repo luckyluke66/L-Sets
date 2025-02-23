@@ -6,27 +6,33 @@ module FuzzyRelations.Properties (
     asym,
 ) where
 
-import FuzzyRelations.FuzzyRelation
+import FuzzyRelations.LRelation
 import Lattices.ResiduatedLattice
+import Utils.Utils(universeToList)
 
---functions determining degree of properties of fuzzy relations
+-- functions determining degree of properties of fuzzy relations
 
-ref :: (ResiduatedLattice l) => FuzzyRelation a l -> l
-ref (FuzzyRelation f universe ) =
+ref :: (Eq a, ResiduatedLattice l) => LRelation a l -> l
+ref (LRelation f u) =
     foldr (/\) bot [f (x, x) | x <- universe]
+    where universe = universeToList u
 
-sym :: (ResiduatedLattice l) => FuzzyRelation a l -> l
-sym (FuzzyRelation f universe ) =
+sym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
+sym (LRelation f u) =
     foldr (/\) bot [f (x, y) --> f (y, x) | x <- universe, y <- universe]
+    where universe = universeToList u
 
-tra :: (ResiduatedLattice l) => FuzzyRelation a l -> l
-tra (FuzzyRelation f universe ) =
+tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
+tra (LRelation f u) =
     foldr (/\) bot [f (x, y) /\ f (y, z) --> f (x, z) | x <- universe, y <- universe, z <- universe]
+    where universe = universeToList u
 
-irref :: (ResiduatedLattice l) => FuzzyRelation a l -> l
-irref (FuzzyRelation f universe ) = negation $
+irref :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
+irref (LRelation f u) = negation $
     foldr (/\) top [f (x, x) | x <- universe]
+    where universe = universeToList u
 
-asym :: (ResiduatedLattice l) => FuzzyRelation a l -> l
-asym (FuzzyRelation f universe) =
+asym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
+asym (LRelation f u) =
     foldr (/\) bot [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe]
+    where universe = universeToList u
