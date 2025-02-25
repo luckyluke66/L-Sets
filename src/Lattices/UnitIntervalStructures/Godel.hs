@@ -18,6 +18,7 @@ instance BoundedLattice UIGodel where
         | x >= 1 = top
         | otherwise = UIGodel (mkUnitInterval x)
 
+-- | Gödel structure of truth values
 instance ResiduatedLattice UIGodel where
     tnorm x y = x /\ y
     (-->)  = godelResiduum

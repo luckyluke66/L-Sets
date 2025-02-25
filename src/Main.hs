@@ -1,11 +1,11 @@
 module Main where
 
-import FuzzySets.LSet
+import Fuzzy.Sets.LSet
 import FuzzySet
-import FuzzyRelations.LRelation 
-import FuzzyRelations.MembershipFunctions
-import FuzzySets.MembershipFunctions
-import FuzzySets.Cardinality
+import Fuzzy.Relations.LRelation 
+import Fuzzy.Relations.MembershipFunctions
+import Fuzzy.Sets.MembershipFunctions
+import Fuzzy.Sets.Cardinality
 import Lattices.UnitInterval
 import Lattices.UnitIntervalStructures.Godel
 import Lattices.UnitIntervalStructures.Lukasiewicz

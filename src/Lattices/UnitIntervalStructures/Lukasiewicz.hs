@@ -18,6 +18,7 @@ instance BoundedLattice UILukasiewicz where
         | x >= 1 = top
         | otherwise = UILukasiewicz (mkUnitInterval x)
 
+-- | Łukasiewicz structure of truth values
 instance ResiduatedLattice UILukasiewicz where
     tnorm a b = a + b - top \/ bot
     a --> b = top - a + b /\ top

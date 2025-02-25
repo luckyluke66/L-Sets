@@ -18,6 +18,7 @@ instance BoundedLattice UIProduct where
         | x >= 1 = top
         | otherwise = UIProduct (mkUnitInterval x)
 
+-- | Product (Goguen) structure of truth values
 instance ResiduatedLattice UIProduct where
     tnorm x y = x * y
     a --> b = if a <= b then top else a / b 
