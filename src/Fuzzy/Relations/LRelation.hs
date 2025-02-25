@@ -13,7 +13,7 @@ import Data.Maybe
 import FuzzySet
 
 
-
+-- | Binary L relation is a fuzzy set on a universe of pairs
 data (ResiduatedLattice l, Eq a) => LRelation a l = LRelation
     { membership :: (a, a) -> l
     , universe :: ![(a, a)]
