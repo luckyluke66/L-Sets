@@ -1,5 +1,6 @@
 module Utils.Utils(
-    universeToList
+    universeToList,
+    crop,
 ) where
 
 import Data.List(nub)
@@ -9,3 +10,7 @@ flattenPairs = foldr (\(x ,y) -> (++) [x, y]) []
 
 universeToList :: (Eq a) => [(a, a)] -> [a]
 universeToList = nub . flattenPairs
+
+-- | Round real number to 6 digits
+crop :: RealFloat a => a -> a
+crop x = fromInteger (round (x * (10^6))) / (10.0^^6)

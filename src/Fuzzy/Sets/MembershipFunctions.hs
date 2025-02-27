@@ -12,7 +12,7 @@ module Fuzzy.Sets.MembershipFunctions(
     rectangular,
     trapezoid,
     gaussian,
-    exponential
+    exponential,
 ) where
     
 

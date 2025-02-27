@@ -7,7 +7,7 @@ module Fuzzy.Sets.LSet(
     FuzzySet(member, universe),
     fromPairs,
     fromFunction,
-    crop,
+    toPairs,
 ) where
 
 import Lattices.UnitInterval
@@ -25,20 +25,22 @@ data (ResiduatedLattice l) => LSet a l = LSet
     , universe :: ![a]
     }
 
+
 instance (Show a, Show l, ResiduatedLattice l) => Show (LSet a l) where
-    show :: (Show a, Show l, ResiduatedLattice l) => LSet a l -> String
+    show :: LSet a l -> String
     show (LSet f u) = "FuzzySet { " ++ show [(x, f x) | x <- u] ++ " }"
 
+
 instance (ResiduatedLattice l, Eq a) => FuzzySet (LSet a l) a l where
-    member :: ResiduatedLattice l => LSet a l -> a -> l
+    member :: LSet a l -> a -> l
     member (LSet f _) = f 
-    universe :: ResiduatedLattice l => LSet a l -> [a]
+    universe :: LSet a l -> [a]
     universe (LSet _ u) = u
     mkFuzzySet :: (a -> l) -> [a] -> LSet a l
     mkFuzzySet = LSet
- 
 
--- Construct fuzzy set from list of pairs
+
+-- | Construct fuzzy set from list of pairs
 fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> LSet a l
 fromPairs xs = LSet f u
     where
@@ -46,11 +48,11 @@ fromPairs xs = LSet f u
         u = map fst xs
 
 
--- Construct fuzzy set from a membership function and universe set
+-- | Construct fuzzy set from a membership function and universe set
 fromFunction :: (ResiduatedLattice l) => (a -> l) -> [a] -> LSet a l
 fromFunction = LSet
 
 
--- | Round real number to 6 digits
-crop :: RealFloat a => a -> a
-crop x = fromInteger (round (x * (10^6))) / (10.0^^6)
+-- | Convert fuzzy set to list of pairs 
+toPairs :: (ResiduatedLattice l, Eq a) => LSet a l -> [(a, l)]
+toPairs (LSet f universe) = [(u, f u) | u <- universe]

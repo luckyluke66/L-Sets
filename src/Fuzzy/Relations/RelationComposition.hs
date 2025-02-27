@@ -1,4 +1,3 @@
-
 {- | This module contains various compositions of binary 'LRelations'.
 we provide natural language description of meaning of each type of composition 
 on simple example with two relations R (x , y) - patient x has symptom y 
