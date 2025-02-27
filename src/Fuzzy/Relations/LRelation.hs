@@ -35,8 +35,5 @@ instance (Eq a, ResiduatedLattice l) => FuzzySet (LRelation a l) (a, a) l where
     member (LRelation r _) = r
     universe :: ResiduatedLattice l => LRelation a l -> [(a, a)]
     universe (LRelation _ u) = u
-
-
-
---alphaCut :: (ResiduatedLattice l) => l - LRelation a l -> [(a, a)]
---alphaCut alpha LRelation f u) = [(x, y) | x <- u, y <- u, f (x, y) >= alpha]
+    mkFuzzySet :: ((a, a) -> l) -> [(a, a)] -> LRelation a l
+    mkFuzzySet = LRelation

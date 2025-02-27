@@ -5,11 +5,9 @@
 module Fuzzy.Sets.LSet(
     LSet(LSet),
     FuzzySet(member, universe),
+    fromPairs,
+    fromFunction,
     crop,
-    union,
-    intersection,
-    complement,
-    alphaCut,
 ) where
 
 import Lattices.UnitInterval
@@ -36,7 +34,9 @@ instance (ResiduatedLattice l, Eq a) => FuzzySet (LSet a l) a l where
     member (LSet f _) = f 
     universe :: ResiduatedLattice l => LSet a l -> [a]
     universe (LSet _ u) = u
-
+    mkFuzzySet :: (a -> l) -> [a] -> LSet a l
+    mkFuzzySet = LSet
+ 
 
 -- Construct fuzzy set from list of pairs
 fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> LSet a l
@@ -50,33 +50,7 @@ fromPairs xs = LSet f u
 fromFunction :: (ResiduatedLattice l) => (a -> l) -> [a] -> LSet a l
 fromFunction = LSet
 
+
 -- | Round real number to 6 digits
 crop :: RealFloat a => a -> a
 crop x = fromInteger (round (x * (10^6))) / (10.0^^6)
-
-
--- | Fuzzy set union A ∪ B = C
-union :: (ResiduatedLattice l) => LSet a l -> LSet a l -> LSet a l
-union (LSet f u) (LSet g _) = LSet (\x -> f x \/ g x) u
-
--- | Fuzzy set intersection A ∩ B
-intersection :: (ResiduatedLattice l) => LSet a l -> LSet a l -> LSet a l
-intersection (LSet f u) (LSet g _) = LSet (\x ->  f x /\ g x) u
-
--- | Fuzzy set complement A′ 
-complement :: (ResiduatedLattice l, Num l) => LSet a l -> LSet a l
-complement (LSet f u) = LSet (negation . f)  u
-
--- | 'tnorm' over fuzzy sets 
-setTnorm :: (ResiduatedLattice l) => LSet a l -> LSet a l -> LSet a l
-setTnorm (LSet f u) (LSet g _) = LSet (\x -> f x `tnorm` g x) u
-
--- | Residuum ('-->') over fuzzy sets
-setResiduum :: (ResiduatedLattice l) => LSet a l -> LSet a l -> LSet a l
-setResiduum (LSet f u) (LSet g _) = LSet (\x -> f x --> g x) u
-
-
--- | Alpha cut on Fuzzy set A is a list of items from universe U that 
--- belong to A in degree at least alpha
-alphaCut :: (ResiduatedLattice l) => l -> LSet a l -> [a]
-alphaCut alpha (LSet f u) = [x | x <- u, f x >= alpha]
