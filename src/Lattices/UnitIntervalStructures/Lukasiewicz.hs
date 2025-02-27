@@ -1,6 +1,9 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Lattices.UnitIntervalStructures.Lukasiewicz(UILukasiewicz(UILukasiewicz)) where
+module Lattices.UnitIntervalStructures.Lukasiewicz(
+    UILukasiewicz(UILukasiewicz),
+    mkLukasiewiczUnitInterval
+) where
 
 import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
@@ -13,10 +16,7 @@ instance BoundedLattice UILukasiewicz where
     (\/) (UILukasiewicz x) (UILukasiewicz y) = UILukasiewicz (x \/ y)
     bot = UILukasiewicz bot
     top = UILukasiewicz top
-    mkLattice x
-        | x <= 0 = bot
-        | x >= 1 = top
-        | otherwise = UILukasiewicz (mkUnitInterval x)
+    mkLattice = mkLukasiewiczUnitInterval
 
 -- | Łukasiewicz structure of truth values
 instance ResiduatedLattice UILukasiewicz where
@@ -25,3 +25,6 @@ instance ResiduatedLattice UILukasiewicz where
 
 instance Show UILukasiewicz where 
     show (UILukasiewicz x) = show x
+
+mkLukasiewiczUnitInterval :: Double -> UILukasiewicz
+mkLukasiewiczUnitInterval x = UILukasiewicz $ mkUnitInterval x

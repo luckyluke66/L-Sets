@@ -1,6 +1,9 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Lattices.UnitIntervalStructures.Product(UIProduct(UIProduct)) where
+module Lattices.UnitIntervalStructures.Product(
+    UIProduct(UIProduct),
+    mkProductUnitInterval
+) where
 
 import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
@@ -13,10 +16,7 @@ instance BoundedLattice UIProduct where
     (\/) (UIProduct x) (UIProduct y) = UIProduct (x \/ y)
     bot = UIProduct bot
     top = UIProduct top
-    mkLattice x
-        | x <= 0 = bot
-        | x >= 1 = top
-        | otherwise = UIProduct (mkUnitInterval x)
+    mkLattice = mkProductUnitInterval
 
 -- | Product (Goguen) structure of truth values
 instance ResiduatedLattice UIProduct where
@@ -25,3 +25,6 @@ instance ResiduatedLattice UIProduct where
 
 instance Show UIProduct where 
     show (UIProduct x) = show x
+
+mkProductUnitInterval :: Double -> UIProduct
+mkProductUnitInterval x = UIProduct $ mkUnitInterval x

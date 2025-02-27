@@ -1,6 +1,9 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Lattices.UnitIntervalStructures.Godel(UIGodel(UIGodel)) where
+module Lattices.UnitIntervalStructures.Godel(
+    UIGodel(UIGodel),
+    mkGodelUnitInterval
+) where
 
 import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
@@ -13,10 +16,7 @@ instance BoundedLattice UIGodel where
     (\/) (UIGodel x) (UIGodel y) = UIGodel (x \/ y)
     bot = UIGodel bot
     top = UIGodel top
-    mkLattice x
-        | x <= 0 = bot
-        | x >= 1 = top
-        | otherwise = UIGodel (mkUnitInterval x)
+    mkLattice = mkGodelUnitInterval
 
 -- | Gödel structure of truth values
 instance ResiduatedLattice UIGodel where
@@ -25,6 +25,9 @@ instance ResiduatedLattice UIGodel where
 
 instance Show UIGodel where
     show (UIGodel x) = show x
+
+mkGodelUnitInterval :: Double -> UIGodel
+mkGodelUnitInterval x = UIGodel $ mkUnitInterval x
 
 godelResiduum :: UIGodel -> UIGodel -> UIGodel
 godelResiduum x y
