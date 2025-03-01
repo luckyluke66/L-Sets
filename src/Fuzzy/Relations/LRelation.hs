@@ -24,19 +24,17 @@ data (ResiduatedLattice l, Eq a) => LRelation a l = LRelation
     -- so we have R: U x U -> L
 
 instance (Eq a, Show a, Show l, ResiduatedLattice l) => Show (LRelation a l) where
-  show (LRelation r u) =
-    let memberships = [(p, r p) | p <- u]
-    in  "LRelation {\n"
+    show :: LRelation a l -> String
+    show (LRelation r u) =
+        let memberships = [(p, r p) | p <- u]
+        in  "LRelation {\n"
         ++ "  Memberships: " ++ show memberships ++ "\n"
         ++ "\n}"
 
 instance (Eq a, ResiduatedLattice l) => FuzzySet (LRelation a l) (a, a) l where
-    member :: ResiduatedLattice l => LRelation a l -> (a, a) -> l
+    member :: LRelation a l -> (a, a) -> l
     member (LRelation r _) = r
-    universe :: ResiduatedLattice l => LRelation a l -> [(a, a)]
+    universe :: LRelation a l -> [(a, a)]
     universe (LRelation _ u) = u
-
-
-
---alphaCut :: (ResiduatedLattice l) => l - LRelation a l -> [(a, a)]
---alphaCut alpha LRelation f u) = [(x, y) | x <- u, y <- u, f (x, y) >= alpha]
+    mkFuzzySet :: ((a, a) -> l) -> [(a, a)] -> LRelation a l
+    mkFuzzySet = LRelation

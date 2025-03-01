@@ -17,11 +17,11 @@ description:
 
     This package provide functions for working with fuzzy sets and fuzzy relations.
 
+extra-source-files: CHANGELOG.md
+
 source-repository head
     type:           git
     location:       https://github.com/luckyluke66/L-Sets 
-
-extra-source-files: CHANGELOG.md
 
 library
     default-language: Haskell2010
@@ -46,10 +46,6 @@ library
     other-modules:
         Utils.Utils
 
-
-
+        
     build-depends:    
         base ^>=4.16.4.0,
-        containers^>=0.6.5.1
-    hs-source-dirs:   app
-    default-language: Haskell2010

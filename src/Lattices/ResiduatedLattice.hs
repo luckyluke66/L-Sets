@@ -52,7 +52,6 @@ class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l
     -- proc jsou tam vsechny classy? 
 
 -- | A bounded lattice with additional laws and operations namely --> and tnorm
--- /Adjointness/
 --
 -- /Commutativity/
 --
@@ -71,6 +70,7 @@ class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l
 --  x 'tnorm' 1 ≡ x
 -- @
 --
+-- /Adjointness/
 -- @
 -- x ≤ y '-->' z iff x 'tnorm' y ≤ z 
 -- @
