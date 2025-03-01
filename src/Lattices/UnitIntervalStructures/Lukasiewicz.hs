@@ -20,8 +20,8 @@ instance BoundedLattice UILukasiewicz where
 
 -- | Łukasiewicz structure of truth values
 instance ResiduatedLattice UILukasiewicz where
-    tnorm a b = a + b - top \/ bot
-    a --> b = top - a + b /\ top
+    tnorm a b = (a + b - top) \/ bot
+    a --> b = (top - (a + b)) /\ top
 
 instance Show UILukasiewicz where 
     show (UILukasiewicz x) = show x

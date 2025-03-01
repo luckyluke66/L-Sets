@@ -87,4 +87,4 @@ class BoundedLattice l => ResiduatedLattice l where
     
     power :: l -> Nat -> l
     power a 0 = top
-    power a n = a /\ power a (n - 1) -- je to spravne /\?
+    power a n = a `tnorm` power a (n - 1)
