@@ -4,6 +4,8 @@ module UnitIntervalStructuresTest (
     productTests,
 ) where
 
+
+import Utils.Utils
 import Test.Tasty
 import Test.Tasty.HUnit
 import Lattices.UnitIntervalStructures.Godel
@@ -11,10 +13,6 @@ import Lattices.UnitIntervalStructures.Lukasiewicz
 import Lattices.UnitIntervalStructures.Product
 import Lattices.ResiduatedLattice
 import Lattices.UnitInterval
-
-assertApproxEqual :: (RealFrac a, Show a) => String -> a -> a -> Assertion
-assertApproxEqual msg actual expected =
-    assertBool (msg ++ " expected: " ++ show expected ++ " but got: " ++ show actual) (abs (expected - actual) < 1e-7)
 
 
 godelTests :: TestTree
@@ -49,11 +47,11 @@ lukasiewiczTests = testGroup "Lukasiewicz Tests" [
     testCase "tnorm 1.0 1.0" $ assertApproxEqual "" (tnorm (UILukasiewicz 1.0) (UILukasiewicz 1.0)) top,
     testCase "tnorm 0.0 0.0" $ assertApproxEqual "" (tnorm (UILukasiewicz 0.0) (UILukasiewicz 0.0)) bot,
     testCase "tnorm 0.2 0.8" $ assertApproxEqual "" (tnorm (UILukasiewicz 0.2) (UILukasiewicz 0.8)) bot,
-    testCase "residuum 0.3 0.7" $ assertApproxEqual "" (UILukasiewicz 0.3 --> UILukasiewicz 0.7) bot,
-    testCase "residuum 0.7 0.3" $ assertApproxEqual "" (UILukasiewicz 0.7 --> UILukasiewicz 0.3) bot,
-    testCase "residuum 0.5 0.5" $ assertApproxEqual "" (UILukasiewicz 0.5 --> UILukasiewicz 0.5) bot,
-    testCase "residuum 0.2 0.8" $ assertApproxEqual "" (UILukasiewicz 0.2 --> UILukasiewicz 0.8) bot,
-    testCase "residuum 0.8 0.2" $ assertApproxEqual "" (UILukasiewicz 0.8 --> UILukasiewicz 0.2) bot
+    testCase "residuum 0.3 0.7" $ assertApproxEqual "" (UILukasiewicz 0.3 --> UILukasiewicz 0.7) top,
+    testCase "residuum 0.7 0.3" $ assertApproxEqual "" (UILukasiewicz 0.7 --> UILukasiewicz 0.3) (UILukasiewicz 0.6),
+    testCase "residuum 0.5 0.5" $ assertApproxEqual "" (UILukasiewicz 0.5 --> UILukasiewicz 0.5) top,
+    testCase "residuum 0.2 0.8" $ assertApproxEqual "" (UILukasiewicz 0.2 --> UILukasiewicz 0.8) top,
+    testCase "residuum 0.8 0.2" $ assertApproxEqual "" (UILukasiewicz 0.8 --> UILukasiewicz 0.2) (UILukasiewicz 0.4)
     ]
 
 productTests :: TestTree

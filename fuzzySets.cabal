@@ -63,3 +63,7 @@ test-suite test
     
     other-modules:
         UnitIntervalStructuresTest
+        Utils.Utils
+        Fuzzy.Sets.LSetTest
+        Fuzzy.Sets.MembershipFunctionsTest
+        Fuzzy.Sets.PropertiesTest
