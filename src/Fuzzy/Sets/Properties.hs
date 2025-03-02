@@ -14,6 +14,7 @@ module Fuzzy.Sets.Properties (
 import FuzzySet
 import Fuzzy.Sets.LSet
 import Lattices.ResiduatedLattice 
+import FuzzySet
 
 --  | True if 'fuzzySet' is empty, meaning for each u in 'universe' 
 -- 'member' u == 'bot'
@@ -42,6 +43,24 @@ isUniversal set = all (== top) [f x | x <- u]
         u = universe set
         f = member set
 
+
+-- | Highest possible membership of a functions. 
+-- It is always bound by the 'top' of the defining lattice.
+height :: (FuzzySet set a l) => set -> l
+height _ = top
+
+
+-- | Support is a list of all items wit¨h non 'bot' 'member'
+support :: (FuzzySet set a l) => set -> [a]
+support set = filter ((/=bot) . f) u
+    where f = member set
+          u = universe set 
+
+
+-- | Core of a fuzzy set is alpha cut where alpha = 'top'. 
+-- In other words it's a list of items with 'member' equal to 'top'
+core :: (FuzzySet set a l) => set -> [a]
+core = alphaCut top
 
 -- | Is 'FuzzySet' A subset of 'FuzzySet' B ?
 strictSubsethood :: (FuzzySet set a l) => set -> set -> Bool
