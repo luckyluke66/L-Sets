@@ -57,19 +57,18 @@ strictEquality set1 set2 = top == gradedEquality set1 set2
 -- S(A,B) is commonly used syntax for this relation.
 -- If S(A,B) = 1 we can conclude that A ⊆ B
 gradedSubsethood :: (FuzzySet set a l) => set -> set -> l
-gradedSubsethood = gradedOperation (-->)
+gradedSubsethood set1 set2 = foldr (/\) top $ zipWith (-->) (map f u) (map g u)
+        where 
+            f = member set1
+            g = member set2
+            u = universe set1
 
 
 -- | Degree to which set A is equal to the set B
 -- e "A ≈ B is commonly used syntax for this relation
 -- If A ≈ B = 1 than those fuzzy sets are equal
 gradedEquality :: (FuzzySet set a l) => set -> set -> l
-gradedEquality = gradedOperation (<-->)
-
-
-gradedOperation :: (FuzzySet set a l) => (l -> l -> l) -> set -> set -> l
-gradedOperation op set1 set2 =
-    foldr (/\) bot $ zipWith op (map f u) (map g u)
+gradedEquality set1 set2 = foldr (/\) top $ zipWith (<-->) (map f u) (map g u)
         where 
             f = member set1
             g = member set2

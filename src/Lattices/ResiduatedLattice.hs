@@ -80,7 +80,7 @@ class BoundedLattice l => ResiduatedLattice l where
     a <-- b = b --> a
     -- | biresiduum 
     (<-->) :: l -> l -> l
-    a <--> b = a --> b /\ b --> a
+    a <--> b = (a --> b) /\ (b --> a)
     tnorm :: l -> l -> l 
     negation :: l -> l
     negation a = a --> bot
