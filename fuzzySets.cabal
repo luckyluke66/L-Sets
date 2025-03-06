@@ -47,7 +47,7 @@ library
         Utils.Utils
     
     build-depends:    
-        base ^>=4.16.4.0,
+        base,
 
 test-suite test
     type:             exitcode-stdio-1.0
