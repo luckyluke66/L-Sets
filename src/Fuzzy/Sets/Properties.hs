@@ -14,6 +14,7 @@ module Fuzzy.Sets.Properties (
 import FuzzySet
 import Fuzzy.Sets.LSet
 import Lattices.ResiduatedLattice 
+import FuzzySet
 
 --  | True if 'fuzzySet' is empty, meaning for each u in 'universe' 
 -- 'member' u == 'bot'
@@ -43,6 +44,24 @@ isUniversal set = all (== top) [f x | x <- u]
         f = member set
 
 
+-- | Highest possible membership of a functions. 
+-- It is always bound by the 'top' of the defining lattice.
+height :: (FuzzySet set a l) => set -> l
+height _ = top
+
+
+-- | Support is a list of all items wit¨h non 'bot' 'member'
+support :: (FuzzySet set a l) => set -> [a]
+support set = filter ((/=bot) . f) u
+    where f = member set
+          u = universe set 
+
+
+-- | Core of a fuzzy set is alpha cut where alpha = 'top'. 
+-- In other words it's a list of items with 'member' equal to 'top'
+core :: (FuzzySet set a l) => set -> [a]
+core = alphaCut top
+
 -- | Is 'FuzzySet' A subset of 'FuzzySet' B ?
 strictSubsethood :: (FuzzySet set a l) => set -> set -> Bool
 strictSubsethood set1 set2 = top == gradedSubsethood set1 set2
@@ -57,19 +76,18 @@ strictEquality set1 set2 = top == gradedEquality set1 set2
 -- S(A,B) is commonly used syntax for this relation.
 -- If S(A,B) = 1 we can conclude that A ⊆ B
 gradedSubsethood :: (FuzzySet set a l) => set -> set -> l
-gradedSubsethood = gradedOperation (-->)
+gradedSubsethood set1 set2 = foldr (/\) top $ zipWith (-->) (map f u) (map g u)
+        where 
+            f = member set1
+            g = member set2
+            u = universe set1
 
 
 -- | Degree to which set A is equal to the set B
 -- e "A ≈ B is commonly used syntax for this relation
 -- If A ≈ B = 1 than those fuzzy sets are equal
 gradedEquality :: (FuzzySet set a l) => set -> set -> l
-gradedEquality = gradedOperation (<-->)
-
-
-gradedOperation :: (FuzzySet set a l) => (l -> l -> l) -> set -> set -> l
-gradedOperation op set1 set2 =
-    foldr (/\) bot $ zipWith op (map f u) (map g u)
+gradedEquality set1 set2 = foldr (/\) top $ zipWith (<-->) (map f u) (map g u)
         where 
             f = member set1
             g = member set2

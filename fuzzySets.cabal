@@ -42,10 +42,28 @@ library
         Lattices.UnitIntervalStructures.Godel
         Lattices.UnitIntervalStructures.Lukasiewicz
         Lattices.UnitIntervalStructures.Product
-
+    
     other-modules:
         Utils.Utils
-
-        
+    
     build-depends:    
         base,
+
+test-suite test
+    type:             exitcode-stdio-1.0
+    main-is:          Tests.hs
+    hs-source-dirs:   test
+    default-language: Haskell2010
+    build-depends:
+        base,
+        HUnit,
+        tasty,
+        tasty-hunit,
+        fuzzySets,
+    
+    other-modules:
+        UnitIntervalStructuresTest
+        Utils.Utils
+        Fuzzy.Sets.LSetTest
+        Fuzzy.Sets.MembershipFunctionsTest
+        Fuzzy.Sets.PropertiesTest

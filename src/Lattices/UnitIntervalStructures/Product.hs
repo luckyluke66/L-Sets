@@ -21,7 +21,9 @@ instance BoundedLattice UIProduct where
 -- | Product (Goguen) structure of truth values
 instance ResiduatedLattice UIProduct where
     tnorm x y = x * y
-    a --> b = if a <= b then top else a / b 
+    a --> b 
+        | a <= b = top 
+        | otherwise = b / a
 
 instance Show UIProduct where 
     show (UIProduct x) = show x
