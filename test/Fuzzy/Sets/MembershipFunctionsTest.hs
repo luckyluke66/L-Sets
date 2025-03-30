@@ -26,18 +26,21 @@ membershipFunctionsTests = testGroup "Membership Functions Tests" [
 testConstant :: Assertion
 testConstant = do
     let f = constant 0.5 :: Double -> UIGodel
-    assertEqual "constant function" (f 1.0) (mkLattice 0.5)
+    assertEqual "constant 1.0" (mkLattice 0.5) (f 1.0)
+    assertEqual "constant 0.5" (mkLattice 0.5) (f 0.3)
 
 testLinear :: Assertion
 testLinear = do
     let f = linear 2.0 1.0 :: Double -> UIGodel
-    assertEqual "linear function" (f 1.0) (mkLattice 3.0)
+    assertEqual "linear 1.0" (mkLattice 3.0) (f 1.0)
+    assertEqual "linear 6.0" (mkLattice 13.0) (f 6.0)
+    assertEqual "linear 0.3" (mkLattice 7.0) (f 3.0)
 
 testSigmoid :: Assertion
 testSigmoid = do
     let f = sigmoid 1.0 0.0 :: Double -> UIGodel
-    assertEqual "sigmoid function" (f 0.0) (mkLattice 0.5)
-    assertEqual "sigmoid function" (f 1.0) (mkLattice (1 / (1 + exp (-1.0))))
+    assertEqual "sigmoid 0.0" (f 0.0) (mkLattice 0.5)
+    assertEqual "sigmoid 1.0" (f 1.0) (mkLattice (1 / (1 + exp (-1.0))))
 
 testTriangular :: Assertion
 testTriangular = do
