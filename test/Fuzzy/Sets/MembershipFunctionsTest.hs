@@ -44,7 +44,7 @@ testSigmoid = do
 
 testTriangular :: Assertion
 testTriangular = do
-    let f = triangular 0.0 1.0 :: Double -> UILukasiewicz
+    let f = triangular 0.0 0.5 1.0 :: Double -> UILukasiewicz
     assertEqual "triangular function" (f 0.0) (mkLattice 1.0)
     assertEqual "triangular function" (f 1.0) (mkLattice 1.0)
     assertEqual "triangular function" (f 0.5) (mkLattice 1.5)
@@ -57,7 +57,7 @@ testRectangular = do
 
 testTrapezoid :: Assertion
 testTrapezoid = do
-    let f = trapezoid 0.0 1.0 2.0 :: Double -> UILukasiewicz
+    let f = trapezoidal 0.0 1.0 2.0 0.3 :: Double -> UILukasiewicz
     assertEqual "trapezoid function" (f 0.5) (mkLattice 0.5)
     assertEqual "trapezoid function" (f 1.5) (mkLattice 0.5)
     assertEqual "trapezoid function" (f 2.5) bot
