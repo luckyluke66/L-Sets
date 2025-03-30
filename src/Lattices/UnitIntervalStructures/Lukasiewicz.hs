@@ -2,7 +2,8 @@
 
 module Lattices.UnitIntervalStructures.Lukasiewicz(
     UILukasiewicz(UILukasiewicz),
-    mkLukasiewiczUnitInterval
+    mkLukasiewiczUnitInterval,
+    fromLukasiewiczUnitInterval
 ) where
 
 import Lattices.ResiduatedLattice
@@ -28,3 +29,6 @@ instance Show UILukasiewicz where
 
 mkLukasiewiczUnitInterval :: Double -> UILukasiewicz
 mkLukasiewiczUnitInterval x = UILukasiewicz $ mkUnitInterval x
+
+fromLukasiewiczUnitInterval :: UILukasiewicz -> Double
+fromLukasiewiczUnitInterval (UILukasiewicz (UnitInterval x)) = x

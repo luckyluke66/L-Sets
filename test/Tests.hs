@@ -7,6 +7,7 @@ import UnitIntervalStructuresTest
 import Fuzzy.Sets.LSetTest 
 import Fuzzy.Sets.MembershipFunctionsTest
 import Fuzzy.Sets.PropertiesTest 
+import Fuzzy.Sets.MembershipFunctionsTest
 
 -- Run all tests
 main :: IO ()
