@@ -39,37 +39,40 @@ testLinear = do
 testSigmoid :: Assertion
 testSigmoid = do
     let f = sigmoid 1.0 0.0 :: Double -> UIGodel
-    assertEqual "sigmoid 0.0" (f 0.0) (mkLattice 0.5)
-    assertEqual "sigmoid 1.0" (f 1.0) (mkLattice (1 / (1 + exp (-1.0))))
+    assertEqual "sigmoid 0.0" (mkLattice 0.5) (f 0.0)
+    assertEqual "sigmoid 1.0" (mkLattice (1 / (1 + exp (-1.0)))) (f 1.0)
 
 testTriangular :: Assertion
 testTriangular = do
     let f = triangular 0.0 0.5 1.0 :: Double -> UILukasiewicz
-    assertEqual "triangular function" (f 0.0) (mkLattice 1.0)
-    assertEqual "triangular function" (f 1.0) (mkLattice 1.0)
-    assertEqual "triangular function" (f 0.5) (mkLattice 1.5)
+    assertEqual "triangular function" (mkLattice 0.0) (f 0.0)
+    assertEqual "triangular function" (mkLattice 1.0) (f 0.5)
+    assertEqual "triangular function" (mkLattice 0.6) (f 0.3)
 
 testRectangular :: Assertion
 testRectangular = do
     let f = rectangular 0.0 1.0 0.5 :: Double -> UILukasiewicz
-    assertEqual "rectangular function" (f 0.5) (mkLattice 0.5)
-    assertEqual "rectangular function" (f 1.5) bot
+    assertEqual "rectangular function" (mkLattice 0.5) (f 0.5)
+    assertEqual "rectangular function" bot (f 1.5)
 
 testTrapezoid :: Assertion
 testTrapezoid = do
-    let f = trapezoidal 0.0 1.0 2.0 0.3 :: Double -> UILukasiewicz
-    assertEqual "trapezoid function" (f 0.5) (mkLattice 0.5)
-    assertEqual "trapezoid function" (f 1.5) (mkLattice 0.5)
-    assertEqual "trapezoid function" (f 2.5) bot
+    let f = trapezoidal 0.0 0.5 1.5 2.0 :: Double -> UILukasiewicz
+    assertEqual "trapezoid function at 0.0" (mkLattice 0.0) (f 0.0)
+    assertEqual "trapezoid function at 0.5" (mkLattice 1.0) (f 0.5)
+    assertEqual "trapezoid function at 1.0" (mkLattice 1.0) (f 1.0)
+    assertEqual "trapezoid function at 1.5" (mkLattice 1.0) (f 1.5)
+    assertEqual "trapezoid function at 2.0" (mkLattice 0.0) (f 2.0)
+    assertEqual "trapezoid function at 2.5" (mkLattice 0.0) (f 2.5)
 
 testGaussian :: Assertion
 testGaussian = do
     let f = gaussian 1.0 0.0 1.0 :: Double -> UIProduct
-    assertEqual "gaussian function" (f 0.0) (mkLattice 1.0)
-    assertEqual "gaussian function" (f 1.0) (mkLattice (exp (-0.5)))
+    assertEqual "gaussian function"  (mkLattice 1.0) (f 0.0)
+    assertEqual "gaussian function"  (mkLattice (exp (-0.5))) (f 1.0)
 
 testExponential :: Assertion
 testExponential = do
     let f = exponential :: Double -> UIProduct
-    assertEqual "exponential function" (f 1.0) (mkLattice (exp 1))
-    assertEqual "exponential function" (f 0.0) (mkLattice 1.0)
+    assertEqual "exponential function" (mkLattice (exp 1)) (f 1.0) 
+    assertEqual "exponential function" (mkLattice 1.0) (f 0.0)
