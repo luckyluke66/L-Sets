@@ -27,6 +27,23 @@ class (ResiduatedLattice l) => FuzzySet set a l | set -> a l where
     universeCardinality s = length $ universe s
 
 
+-- | construct a empty fuzzy set 
+mkEmptySet :: (FuzzySet set a l) => set
+mkEmptySet = mkFuzzySet (const bot) []
+
+-- | construct a singleton fuzzy set
+mkSingletonSet :: (FuzzySet set a l, Eq a) => [a] -> (a, l) -> set
+mkSingletonSet u (x, l) = mkFuzzySet f u
+    where
+        f y
+            | y == x = l
+            | otherwise = bot
+
+-- | construct universal fuzzy set
+mkUniversalSet :: (FuzzySet set a l, Eq a) => [a] -> set
+mkUniversalSet = mkFuzzySet (const top)
+
+
 -- | list of all values from 'universe' that have 'member' u >= alpha
 alphaCut :: (FuzzySet set a l) => l -> set -> [a]
 alphaCut alpha set = [x | x <- u, f x >= alpha]
