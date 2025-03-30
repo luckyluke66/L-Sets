@@ -7,7 +7,11 @@ module Fuzzy.Relations.LRelation (
     LRelation(LRelation),
     FuzzySet(..),
     fromList,
-    fromFuzzySet
+    fromFuzzySet,
+    fromFunction,
+    mkEmptySet,
+    mkSingletonSet,
+    mkUniversalSet
 ) where
 
 import Lattices.ResiduatedLattice

@@ -3,6 +3,7 @@
 
 module Lattices.UnitIntervalStructures.Godel(
     UIGodel(UIGodel),
+    BoundedLattice(..),
     mkGodelUnitInterval,
     fromGodelUnitInterval
 ) where
