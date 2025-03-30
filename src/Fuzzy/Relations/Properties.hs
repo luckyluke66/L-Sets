@@ -16,19 +16,19 @@ import Utils.Utils(universeToList)
 -- | Degree to which 'LRelation' is reflexive 
 ref :: (Eq a, ResiduatedLattice l) => LRelation a l -> l
 ref (LRelation f u) =
-    foldr (/\) bot [f (x, x) | x <- universe]
+    foldr (/\) top [f (x, x) | x <- universe]
     where universe = universeToList u
 
 -- | Degree to which 'LRelation' is symmetric
 sym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 sym (LRelation f u) =
-    foldr (/\) bot [f (x, y) --> f (y, x) | x <- universe, y <- universe]
+    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe]
     where universe = universeToList u
 
 -- | Degree to which 'LRelation' is transitive
 tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 tra (LRelation f u) =
-    foldr (/\) bot [f (x, y) /\ f (y, z) --> f (x, z) | x <- universe, y <- universe, z <- universe]
+    foldr (/\) top [f (x, y) /\ f (y, z) --> f (x, z) | x <- universe, y <- universe, z <- universe]
     where universe = universeToList u
 
 -- | Degree to which 'LRelation' is irreflexive
@@ -40,5 +40,5 @@ irref (LRelation f u) = negation $
 -- | Degree to which 'LRelation' is asymmetric
 asym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 asym (LRelation f u) =
-    foldr (/\) bot [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe]
+    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe]
     where universe = universeToList u

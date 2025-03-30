@@ -118,3 +118,4 @@ testGradedEqualityProduct = do
     let lset1 = fromPairs [(1, 1), (2, 0.6)] :: LSet Int UIProduct
         lset2 = fromPairs [(1, 0.9), (2, 0.5)] :: LSet Int UIProduct
     assertApproxEqual "gradedEquality function with varied values (UIProduct)" (gradedEquality lset1 lset2) (UIProduct 0.5/0.6)
+    

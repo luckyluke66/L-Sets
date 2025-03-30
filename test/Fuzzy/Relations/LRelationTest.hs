@@ -42,7 +42,7 @@ testFromFunction = do
 -- Test mkEmptySet
 testMkEmptySet :: Assertion
 testMkEmptySet = do
-    let rel = mkEmptySet :: LRelation Int UILukasiewicz
+    let rel = mkEmptyRel :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" bot (member rel (1, 1))
     assertEqual "Universe is empty" [] (universe rel)
 
@@ -50,7 +50,7 @@ testMkEmptySet = do
 testMkSingletonSet :: Assertion
 testMkSingletonSet = do
     let u = [(1, 1), (1, 2), (2, 1), (2, 2)]
-    let rel = mkSingletonSet u ((1, 1), mkLattice 0.8) :: LRelation Int UILukasiewicz
+    let rel = mkSingletonRel u ((1, 1), mkLattice 0.8) :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" (mkLattice 0.8) (member rel (1, 1))
     assertEqual "Membership (1,2)" bot (member rel (1, 2))
 
@@ -58,7 +58,7 @@ testMkSingletonSet = do
 testMkUniversalSet :: Assertion
 testMkUniversalSet = do
     let u = [(1, 1), (1, 2), (2, 1), (2, 2)]
-    let rel = mkUniversalSet u :: LRelation Int UILukasiewicz
+    let rel = mkUniversalRel u :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" top (member rel (1, 1))
     assertEqual "Membership (1,2)" top (member rel (1, 2))
 

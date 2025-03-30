@@ -9,6 +9,7 @@ import Fuzzy.Sets.MembershipFunctionsTest
 import Fuzzy.Sets.PropertiesTest 
 import Fuzzy.Sets.MembershipFunctionsTest
 import Fuzzy.Relations.LRelationTest
+import Fuzzy.Relations.PropertiesTest
 
 -- Run all tests
 main :: IO ()
@@ -19,5 +20,6 @@ main = defaultMain $ testGroup "All Tests" [
     lsetTests,
     membershipFunctionsTests,
     propertiesTests,
-    lrelationTests
+    lrelationTests,
+    relPropertiesTests
     ]

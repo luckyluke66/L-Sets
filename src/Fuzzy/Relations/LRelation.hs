@@ -9,9 +9,9 @@ module Fuzzy.Relations.LRelation (
     fromList,
     fromFuzzySet,
     fromFunction,
-    mkEmptySet,
-    mkSingletonSet,
-    mkUniversalSet
+    mkEmptyRel,
+    mkSingletonRel,
+    mkUniversalRel
 ) where
 
 import Lattices.ResiduatedLattice
@@ -62,16 +62,16 @@ fromFunction :: (ResiduatedLattice l, Eq a) => ((a, a) -> l) -> [(a, a)] -> LRel
 fromFunction = LRelation
 
 
-mkEmptySet :: (ResiduatedLattice l, Eq a) => LRelation a l
-mkEmptySet = LRelation (const bot) []
+mkEmptyRel :: (ResiduatedLattice l, Eq a) => LRelation a l
+mkEmptyRel = LRelation (const bot) []
 
 
 -- | construct a singleton fuzzy set
-mkSingletonSet :: (ResiduatedLattice l, Eq a) => [(a, a)] -> ((a, a), l) -> LRelation a l
-mkSingletonSet u (x, l) = LRelation f u
+mkSingletonRel :: (ResiduatedLattice l, Eq a) => [(a, a)] -> ((a, a), l) -> LRelation a l
+mkSingletonRel u (x, l) = LRelation f u
     where f pair = if pair == x then l else bot
 
 
 -- | construct universal fuzzy set
-mkUniversalSet :: (ResiduatedLattice l, Eq a) => [(a, a)] -> LRelation a l
-mkUniversalSet = LRelation (const top)
+mkUniversalRel :: (ResiduatedLattice l, Eq a) => [(a, a)] -> LRelation a l
+mkUniversalRel = LRelation (const top)
