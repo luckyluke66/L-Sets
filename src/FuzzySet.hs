@@ -72,11 +72,15 @@ alphaCut alpha set = [x | x <- u, f x >= alpha]
 
 >>> let set1 = fromPairs [(1, 0.2), (2, 0.7), (3, 0.1)] :: LSet Int UILukasiewicz 
 >>> let set2 = fromPairs [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz 
+>>> let set3 = fromPairs [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
 >>> toPairs $ union set1 set2
 [(1, 0.3),(2, 0.7), (3, 0.1)]
 
->>> let set1 = 
-2
+>>> toPairs $ union set1 set3
+[(1, 0.5), (2, 0.7), (3, 0.1), (4, 0.8)]
+
+>>> toPairs $ union set1 mkEmptySet
+[(1, 0.2), (2, 0.7), (3, 0.1)]
 -}
 union :: (FuzzySet set a l) => set -> set -> set
 union set1 set2 = mkFuzzySet (\x -> f x \/ g x) u
@@ -96,8 +100,15 @@ unions sets@(set:_) = foldr union (mkUniversalSet (universe set)) sets
 
 >>> let set1 = fromPairs [(1, 0.2), (2, 0.7), (3, 0.1)]
 >>> let set2 = fromPairs [(1, 0.3), (2, 0.4)]
+>>> let set3 = fromPairs [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
 >>> toPairs $ intersection set1 set2
-[(1,0.2), (2,0.4), (3,0.0)]
+[(1, 0.2), (2, 0.4), (3, 0.0)]
+
+>>> toPairs $ intersection set1 set3
+[(1, 0.2), (2, 0.1), (3, 0.0), (4, 0.0)]
+
+>>> toPairs $ intersection set1 mkEmptySet
+[(1, 0.0), (2, 0.0), (3, 0.0)]
 -}
 intersection :: (FuzzySet set a l) => set -> set -> set
 intersection set1 set2 = mkFuzzySet (\x ->  f x /\ g x) u
@@ -113,9 +124,13 @@ intersections = foldr intersection mkEmptySet
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
->>> toPairs $ complement set
-[(1,0.8),(2,0.3)]
+>>> let set1 = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> toPairs $ complement set1
+[(1, 0.8),(2, 0.3)]
+
+>>> let set2 = fromPairs [(1, 1), (2, 1)]
+>>> toPairs $ complement set2
+[(1, 0), (2, 0)]
 -}
 complement :: (FuzzySet set a l) => set -> set
 complement set = mkFuzzySet (negation . f)  u
