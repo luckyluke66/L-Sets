@@ -8,6 +8,9 @@ module Fuzzy.Sets.LSet(
     fromPairs,
     fromFunction,
     toPairs,
+    mkEmptySet,
+    mkSingletonSet,
+    mkUniversalSet
 ) where
 
 import Lattices.UnitInterval
@@ -56,3 +59,20 @@ fromFunction = LSet
 -- | Convert fuzzy set to list of pairs 
 toPairs :: (ResiduatedLattice l, Eq a) => LSet a l -> [(a, l)]
 toPairs (LSet f universe) = [(u, f u) | u <- universe]
+
+
+-- | construct a empty fuzzy set 
+mkEmptySet :: (ResiduatedLattice l) => LSet a l
+mkEmptySet = LSet (const bot) []
+
+-- | construct a singleton fuzzy set
+mkSingletonSet :: (ResiduatedLattice l, Eq a) => [a] -> (a, l) -> LSet a l
+mkSingletonSet u (x, l) = LSet f u
+    where
+        f y
+            | y == x = l
+            | otherwise = bot
+
+-- | construct universal fuzzy set
+mkUniversalSet :: (ResiduatedLattice l, Eq a) => [a] -> LSet a l
+mkUniversalSet = LSet (const top)

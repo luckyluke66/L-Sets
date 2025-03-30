@@ -10,21 +10,21 @@ module Fuzzy.Sets.MembershipFunctions(
     sigmoid, 
     triangular,
     rectangular,
-    trapezoid,
+    trapezoidal,
     gaussian,
     exponential,
 ) where
-    
+
 
 import Lattices.ResiduatedLattice
 
 
--- | Constant function returns the same value of x for each y 
+-- | Constant function return a for any value of x \[f(x) = a\]
 constant :: ResiduatedLattice l => Double -> (Double -> l)
-constant x y = mkLattice x
+constant a _ = mkLattice a
 
 
-{-| Standart textbook linear function where f(x) = a * x + b
+{-| Standart textbook linear function where \[f(x) = ax + b\]
 
 >           / 
 >          /   
@@ -38,35 +38,44 @@ linear a b x =
 
 
 {-| Standart logistic function
-
->                                  
+Takes K which is growth value of the function and x0 a midpoint of the function. \[f(x) = \frac{1}{1 + e^{ -k(x - x0)}} \]
+               
 >                       ______
 >                    .´      
 >                  /           
 >           _____.'       
-      
--}                    
+
+-}
 sigmoid :: ResiduatedLattice l => Double -> Double -> (Double -> l)
 sigmoid k x0 x =
     let pow = -k * (x - x0)
     in mkLattice $ 1 / (1 + (exp 1 ** pow))
 
 {-| A combination of two linear functions
--- with this specific shape.
+with this specific shape. first and second arguments are interval determining where the triangle will be on the number line. \[
+\operatorname{tri}(x) =
+\begin{cases}
+    \frac{x - a}{b - a}, & a \leq x < b \\
+    \frac{c - x}{c- b}, & b \leq x \leq c \\
+    0, & \text{otherwise}
+\end{cases}
+\] 0 stands for 'bot' 
 
 >          
 >             /\
 >          __/  \__
 
 -}
-triangular :: ResiduatedLattice l => Double -> Double -> (Double -> l)
-triangular a b x = 
-    let y = 1 - abs (x - a) + b
-    in mkLattice y
+triangular :: ResiduatedLattice l => Double -> Double -> Double -> (Double -> l)
+triangular a b c x 
+    | a <= x && x < b = mkLattice $ (x - a) / (b - a)
+    | b <= x && x < c = mkLattice $ (c - x) / (c - b)
+    | otherwise       = bot
+    
 
 
-{-| Constant function on interval [a, b] else returns 'bot' of Residuated lattice
--- this creates a rectangle shaped function
+{-| Constant function on interval [a, b], first two arguments, else returns 'bot' of Residuated lattice
+- this creates a rectangle shaped function. Third argument is height of the set.
 
 >             _____ 
 >            |     |
@@ -79,18 +88,27 @@ rectangular a b h x
     | otherwise        = bot
 
 
-{-| Trapezoid function is combination of triangular and rectangular functions
+{-| Trapezoidal function is combination of triangular and rectangular functions \[
+\operatorname{tra}(x) =
+\begin{cases}
+    \frac{x - a}{b1 - a}, & a \leq x < b1 \\
+    1, & b1 \leq x < b2  \\
+    \frac{c - x}{c -b2}, & b2 \leq x < c \\
+    0, & \text{otherwise}
+\end{cases}
+\]
 
 >           _______   
 >          /       \
 >       __/         \__
 
 -}
-trapezoid :: ResiduatedLattice l => Double -> Double -> Double -> (Double -> l)
-trapezoid a b c x 
-    | x <= a || x >= c = bot
-    | x >= a && x <= b = mkLattice ((x - a) / (b - a))
-    | x >= b && x <= c = mkLattice ((c - x) / (c - b))
+trapezoidal :: ResiduatedLattice l => Double -> Double -> Double -> Double -> (Double -> l)
+trapezoidal a b1 b2 c x 
+    | a <= x && x < b1   = mkLattice $ (x - a) / (b1 - a)
+    | b1 <= x && x <= b2 = top
+    | b2 <= x && x < c   = mkLattice $ (c - x) / (c - b2)
+    | otherwise = bot
 
 
 {-| Gausian function, also called Bell Curve

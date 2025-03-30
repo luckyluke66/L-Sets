@@ -1,7 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Lattices.UnitInterval(
-    UnitInterval,
+    UnitInterval(..),
     mkUnitInterval
 ) where
 

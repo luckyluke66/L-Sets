@@ -1,10 +1,13 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE InstanceSigs #-}
 
 module Fuzzy.Relations.LRelation (
     LRelation(LRelation),
     FuzzySet(..),
+    fromList,
+    fromFuzzySet
 ) where
 
 import Lattices.ResiduatedLattice
@@ -38,3 +41,33 @@ instance (Eq a, ResiduatedLattice l) => FuzzySet (LRelation a l) (a, a) l where
     universe (LRelation _ u) = u
     mkFuzzySet :: ((a, a) -> l) -> [(a, a)] -> LRelation a l
     mkFuzzySet = LRelation
+
+
+fromFuzzySet :: (FuzzySet f (a, a) l, ResiduatedLattice l, Eq a) => f -> LRelation a l
+fromFuzzySet fuzzySet = LRelation (member fuzzySet) (FuzzySet.universe fuzzySet)
+
+
+fromList :: (ResiduatedLattice l, Eq a) => [((a, a), l)] -> LRelation a l
+fromList lst = LRelation member u
+    where
+        member (x, y) = fromMaybe bot (lookup (x, y) lst)
+        u = map fst lst
+
+
+fromFunction :: (ResiduatedLattice l, Eq a) => ((a, a) -> l) -> [(a, a)] -> LRelation a l 
+fromFunction = LRelation
+
+
+mkEmptySet :: (ResiduatedLattice l, Eq a) => LRelation a l
+mkEmptySet = LRelation (const bot) []
+
+
+-- | construct a singleton fuzzy set
+mkSingletonSet :: (ResiduatedLattice l, Eq a) => [(a, a)] -> ((a, a), l) -> LRelation a l
+mkSingletonSet u (x, l) = LRelation f u
+    where f pair = if pair == x then l else bot
+
+
+-- | construct universal fuzzy set
+mkUniversalSet :: (ResiduatedLattice l, Eq a) => [(a, a)] -> LRelation a l
+mkUniversalSet = LRelation (const top)

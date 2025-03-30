@@ -3,7 +3,8 @@
 
 module Lattices.UnitIntervalStructures.Godel(
     UIGodel(UIGodel),
-    mkGodelUnitInterval
+    mkGodelUnitInterval,
+    fromGodelUnitInterval
 ) where
 
 import Lattices.ResiduatedLattice
@@ -30,6 +31,9 @@ instance Show UIGodel where
 
 mkGodelUnitInterval :: Double -> UIGodel
 mkGodelUnitInterval x = UIGodel $ mkUnitInterval x
+
+fromGodelUnitInterval :: UIGodel -> Double
+fromGodelUnitInterval (UIGodel (UnitInterval x)) = x
 
 godelResiduum :: UIGodel -> UIGodel -> UIGodel
 godelResiduum x y

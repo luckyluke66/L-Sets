@@ -2,7 +2,8 @@
 
 module Lattices.UnitIntervalStructures.Product(
     UIProduct(UIProduct),
-    mkProductUnitInterval
+    mkProductUnitInterval,
+    fromProductUnitInterval
 ) where
 
 import Lattices.ResiduatedLattice
@@ -30,3 +31,6 @@ instance Show UIProduct where
 
 mkProductUnitInterval :: Double -> UIProduct
 mkProductUnitInterval x = UIProduct $ mkUnitInterval x
+
+fromProductUnitInterval :: UIProduct -> Double
+fromProductUnitInterval (UIProduct (UnitInterval x)) = x
