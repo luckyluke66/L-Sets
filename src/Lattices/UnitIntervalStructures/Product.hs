@@ -2,6 +2,7 @@
 
 module Lattices.UnitIntervalStructures.Product(
     UIProduct(UIProduct),
+    BoundedLattice(..),
     mkProductUnitInterval,
     fromProductUnitInterval
 ) where

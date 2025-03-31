@@ -2,6 +2,7 @@
 
 module Lattices.UnitIntervalStructures.Lukasiewicz(
     UILukasiewicz(UILukasiewicz),
+    BoundedLattice(..),
     mkLukasiewiczUnitInterval,
     fromLukasiewiczUnitInterval
 ) where
