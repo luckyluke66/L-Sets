@@ -31,7 +31,7 @@ An 'LRelation' is reflexive if \(ref \: rel =\) 'top'
 -}
 ref :: (Eq a, ResiduatedLattice l) => LRelation a l -> l
 ref (LRelation f u) =
-    foldr (/\) top [f (x, x) | x <- universe, (x, x) `elem` u]
+    foldr (/\) top [f x | x <- u,  uncurry (==) x]
     where universe = universeToList u
 
 
@@ -94,8 +94,8 @@ An 'LRelation' is irreflexive if \(irref \: rel =\) 'top'
 0.3
 -}
 irref :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
-irref (LRelation f u) = 
-    foldr (/\) top [negation (f (x, x)) | x <- universe, (x, x) `elem` u]
+irref (LRelation f u) =
+    foldr (/\) top [negation (f x) | x <- u,  uncurry (==) x]
     where universe = universeToList u
 
 
