@@ -59,7 +59,7 @@ linear a b x =
 
 
 {-| Standart logistic function
-Takes K which is growth value of the function and x0 a midpoint of the function. \[f(x) = \frac{1}{1 + e^{ -k(x - x0)}} \]
+Takes K which is growth value of the function and x0 a midpoint of the function. \[f(x) = \frac{1}{1 + e^{ -k(x - x_0)}} \]
                
 >                       ______
 >                    .´      
