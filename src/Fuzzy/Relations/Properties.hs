@@ -31,7 +31,7 @@ An 'LRelation' is reflexive if \(ref \: rel =\) 'top'
 -}
 ref :: (Eq a, ResiduatedLattice l) => LRelation a l -> l
 ref (LRelation f u) =
-    foldr (/\) top [f (x, x) | x <- universe]
+    foldr (/\) top [f (x, x) | x <- universe, (x, x) `elem` u]
     where universe = universeToList u
 
 
@@ -52,7 +52,7 @@ An 'LRelation' is symmetric if \(sym \: rel =\) 'top'
 -}
 sym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 sym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe]
+    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe, (x, y) `elem` u]
     where universe = universeToList u
 
 
@@ -73,7 +73,8 @@ An 'LRelation' is transitive if \(tra \: rel =\) 'top'
 -}
 tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 tra (LRelation f u) =
-    foldr (/\) top [f (x, y) /\ f (y, z) --> f (x, z) | x <- universe, y <- universe, z <- universe]
+    foldr (/\) top [f (x, y) /\ f (y, z) --> f (x, z) |
+                      x <- universe, y <- universe, (x, y) `elem` u, z <- universe]
     where universe = universeToList u
 
 
@@ -93,8 +94,8 @@ An 'LRelation' is irreflexive if \(irref \: rel =\) 'top'
 0.3
 -}
 irref :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
-irref (LRelation f u) = negation $
-    foldr (/\) top [f (x, x) | x <- universe]
+irref (LRelation f u) = 
+    foldr (/\) top [negation (f (x, x)) | x <- universe, (x, x) `elem` u]
     where universe = universeToList u
 
 
@@ -111,5 +112,5 @@ An 'LRelation' is asymmetric if \(asym \: rel =\) 'top'
 -}
 asym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 asym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe]
+    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe, (x, y) `elem` u]
     where universe = universeToList u

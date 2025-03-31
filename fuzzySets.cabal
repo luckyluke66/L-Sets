@@ -67,3 +67,5 @@ test-suite test
         Fuzzy.Sets.LSetTest
         Fuzzy.Sets.MembershipFunctionsTest
         Fuzzy.Sets.PropertiesTest
+        Fuzzy.Relations.LRelationTest
+        Fuzzy.Relations.PropertiesTest
