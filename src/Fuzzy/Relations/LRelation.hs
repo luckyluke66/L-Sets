@@ -119,6 +119,7 @@ mkSingletonRel u (x, l) = LRelation f (listToUniverse u)
 mkUniversalRel :: (ResiduatedLattice l, Eq a) => [(a, a)] -> LRelation a l
 mkUniversalRel = LRelation (const top)
 
+
 -- | Return relation as a list of pairs
 toPairs :: (ResiduatedLattice l, Eq a) => LRelation a l -> [((a, a), l)]
 toPairs (LRelation f u) = [(x, f x) | x <- u]

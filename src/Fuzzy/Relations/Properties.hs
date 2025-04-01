@@ -53,7 +53,7 @@ An 'LRelation' is symmetric if \(sym \: rel =\) 'top'
 -}
 sym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 sym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe, all (`elem` u) [(x, y), (y, x)]]
+    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe]
     where universe = universeToList u
 
 
@@ -75,7 +75,7 @@ An 'LRelation' is transitive if \(tra \: rel =\) 'top'
 tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 tra (LRelation f u) =
     foldr (/\) top [f (x, y) /\ f (y, z) --> f (x, z) |
-                      x <- universe, y <- universe, z <- universe, all (`elem` u) [(x, y), (y, x), (x, z)]]
+                      x <- universe, y <- universe, z <- universe]
     where universe = universeToList u
 
 
@@ -113,5 +113,5 @@ An 'LRelation' is asymmetric if \(asym \: rel =\) 'top'
 -}
 asym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 asym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe, all (`elem` u) [(x, y), (y, x)]]
+    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe]
     where universe = universeToList u
