@@ -34,7 +34,7 @@ testFromList = do
 testFromFunction :: Assertion
 testFromFunction = do
     let f (x, y) = if x == y then top else bot
-    let u = [(1, 1), (1, 2), (2, 1), (2, 2)]
+    let u = [1, 2]
     let rel = fromFunction f u :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" (mkLattice 1.0) (member rel (1, 1))
     assertEqual "Membership (1,2)" (mkLattice 0.0) (member rel (1, 2))
@@ -49,7 +49,7 @@ testMkEmptySet = do
 -- Test mkSingletonSet
 testMkSingletonSet :: Assertion
 testMkSingletonSet = do
-    let u = [(1, 1), (1, 2), (2, 1), (2, 2)]
+    let u = [1, 2]
     let rel = mkSingletonRel u ((1, 1), mkLattice 0.8) :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" (mkLattice 0.8) (member rel (1, 1))
     assertEqual "Membership (1,2)" bot (member rel (1, 2))
@@ -57,7 +57,7 @@ testMkSingletonSet = do
 -- Test mkUniversalSet
 testMkUniversalSet :: Assertion
 testMkUniversalSet = do
-    let u = [(1, 1), (1, 2), (2, 1), (2, 2)]
+    let u = [1, 2]
     let rel = mkUniversalRel u :: LRelation Int UILukasiewicz
     assertEqual "Membership (1,1)" top (member rel (1, 1))
     assertEqual "Membership (1,2)" top (member rel (1, 2))
@@ -75,4 +75,4 @@ testUniverse :: Assertion
 testUniverse = do
     let lst = [((1, 1), mkLattice 0.8), ((1, 2), mkLattice 0.4)]
     let rel = fromList lst :: LRelation Int UILukasiewicz
-    assertEqual "Universe" [(1, 1), (1, 2)] (universe rel)
+    assertEqual "Universe" [(1, 1), (1, 2), (2, 1), (2, 2)] (universe rel)
