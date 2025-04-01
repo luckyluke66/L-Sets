@@ -49,6 +49,14 @@ library
     build-depends:    
         base,
 
+    default-extensions:
+        InstanceSigs
+        MultiParamTypeClasses
+        FlexibleContexts
+        FlexibleInstances
+        FunctionalDependencies
+
+
 test-suite test
     type:             exitcode-stdio-1.0
     main-is:          Tests.hs
@@ -67,3 +75,5 @@ test-suite test
         Fuzzy.Sets.LSetTest
         Fuzzy.Sets.MembershipFunctionsTest
         Fuzzy.Sets.PropertiesTest
+        Fuzzy.Relations.LRelationTest
+        Fuzzy.Relations.PropertiesTest

@@ -14,9 +14,10 @@ module FuzzySet(
 
 import Lattices.ResiduatedLattice
 import Lattices.UnitIntervalStructures.Lukasiewicz
+import qualified Data.List as SetOp(union, intersect)
 
 -- | Type class defines the basic behavior for a fuzzy set
-class (ResiduatedLattice l) => FuzzySet set a l | set -> a l where
+class (ResiduatedLattice l, Eq a) => FuzzySet set a l | set -> a l where
     mkFuzzySet :: (a -> l) -> [a] -> set
     -- | membership function 
     member :: set -> a -> l
@@ -66,7 +67,7 @@ alphaCut alpha set = [x | x <- u, f x >= alpha]
           u = universe set
 
 
-{- | Fuzzy set union A ∪ B
+{- | Fuzzy set union A ∪ B. Universe of the new set is union of universes from A and B.
 
 ==== __Examples__
 
@@ -86,7 +87,7 @@ union :: (FuzzySet set a l) => set -> set -> set
 union set1 set2 = mkFuzzySet (\x -> f x \/ g x) u
     where f = member set1
           g = member set2
-          u = universe set1
+          u = SetOp.union (universe set1) (universe set2)
 
 
 -- | 'union' over a list of sets
@@ -94,7 +95,7 @@ unions :: (FuzzySet set a l, Eq a) => [set] -> set
 unions sets@(set:_) = foldr union (mkUniversalSet (universe set)) sets
 
 
-{- | Fuzzy set intersection A ∩ B
+{- | Fuzzy set intersection A ∩ B. Universe of the new set is intersection of universes from A and B.
 
 ==== __Examples__
 
@@ -114,7 +115,7 @@ intersection :: (FuzzySet set a l) => set -> set -> set
 intersection set1 set2 = mkFuzzySet (\x ->  f x /\ g x) u
     where f = member set1
           g = member set2
-          u = universe set1
+          u = SetOp.intersect (universe set1) (universe set2)
 
 -- | 'intersection' over a list of sets
 intersections :: (FuzzySet set a l, Eq a) => [set] -> set
@@ -133,12 +134,11 @@ intersections = foldr intersection mkEmptySet
 [(1, 0), (2, 0)]
 -}
 complement :: (FuzzySet set a l) => set -> set
-complement set = mkFuzzySet (negation . f)  u
+complement set = mkFuzzySet (negation . f)  (universe set)
     where f = member set
-          u = universe set
 
 
-{- | Apply a t-norm operation over two fuzzy sets
+{- | Apply a t-norm operation over two fuzzy sets. Both sets should be defined on the same 'universe'.
 
 ==== __Examples__
 
@@ -154,7 +154,7 @@ setTnorm set1 set2 = mkFuzzySet (\x -> f x `tnorm` g x) u
           u = universe set1
 
 
-{- | Apply a residuum operation over two fuzzy sets
+{- | Apply a residuum operation over two fuzzy sets. Both sets should be defined on the same 'universe'.
 
 ==== __Examples__
 
