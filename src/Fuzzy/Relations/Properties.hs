@@ -68,9 +68,9 @@ An 'LRelation' is transitive if \(tra \: rel =\) 'top'
 >>> tra rel
 1.0
 
->>> let rel = LRelation (\(x, y) -> if x < y then 0.7 else bot) u :: LRelation Int UILukasiewicz
+>>> let rel = LRelation (\(x, y) -> if x == y then 0.2 else 0.7) u :: LRelation Int UILukasiewicz
 >>> tra rel
-0.7
+0.5
 -}
 tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 tra (LRelation f u) =
