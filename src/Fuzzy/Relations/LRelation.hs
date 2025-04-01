@@ -19,6 +19,7 @@ import Lattices.ResiduatedLattice
 import Data.List
 import Data.Maybe
 import FuzzySet
+import Utils.Utils (universeToList, listToUniverse)
 
 
 {- | Binary L relation is a fuzzy set on a universe of pairs -}
@@ -63,10 +64,10 @@ fromFuzzySet fuzzySet = LRelation (member fuzzySet) (FuzzySet.universe fuzzySet)
 
 {- | Construct a fuzzy relation from a list of pairs-}
 fromList :: (ResiduatedLattice l, Eq a) => [((a, a), l)] -> LRelation a l
-fromList lst = LRelation member u
+fromList lst = LRelation member (listToUniverse u)
     where
         member (x, y) = fromMaybe bot (lookup (x, y) lst)
-        u = map fst lst
+        u = universeToList (map fst lst)
 
 
 {- | Construct a fuzzy relation from a membership function and a universe
@@ -78,8 +79,8 @@ fromList lst = LRelation member u
 >>> toPairs rel
 [((1,2),0.7),((2,3),0.7),((3,1),0.3)]
 -}
-fromFunction :: (ResiduatedLattice l, Eq a) => ((a, a) -> l) -> [(a, a)] -> LRelation a l 
-fromFunction = LRelation
+fromFunction :: (ResiduatedLattice l, Eq a) => ((a, a) -> l) -> [a] -> LRelation a l 
+fromFunction f u = LRelation f (listToUniverse u)
 
 
 {- | Construct an empty fuzzy relation
@@ -102,8 +103,8 @@ mkEmptyRel = LRelation (const bot) []
 >>> toPairs singletonRel
 [((1, 2), 0.8),((2, 3), 0.0)]
 -}
-mkSingletonRel :: (ResiduatedLattice l, Eq a) => [(a, a)] -> ((a, a), l) -> LRelation a l
-mkSingletonRel u (x, l) = LRelation f u
+mkSingletonRel :: (ResiduatedLattice l, Eq a) => [a] -> ((a, a), l) -> LRelation a l
+mkSingletonRel u (x, l) = LRelation f (listToUniverse u)
     where f pair = if pair == x then l else bot
 
 

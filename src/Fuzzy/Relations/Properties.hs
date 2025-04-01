@@ -10,6 +10,7 @@ module Fuzzy.Relations.Properties (
 import Fuzzy.Relations.LRelation
 import Lattices.ResiduatedLattice
 import Utils.Utils(universeToList)
+import Lattices.UnitIntervalStructures.Godel
 
 -- functions determining degree of properties of fuzzy relations
 
@@ -42,7 +43,7 @@ An 'LRelation' is symmetric if \(sym \: rel =\) 'top'
 ==== __Examples__
 
 >>> let u = [(1, 2), (2, 1), (2, 3), (3, 2)]
->>> let rel = LRelation (\_ ->  0.5) u :: LRelation Int UILukasiewicz
+>>> let rel = LRelation (const  0.5) u :: LRelation Int UILukasiewicz
 >>> sym rel
 1.0
 
@@ -52,7 +53,7 @@ An 'LRelation' is symmetric if \(sym \: rel =\) 'top'
 -}
 sym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 sym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe, (x, y) `elem` u && (y, x) `elem` u]
+    foldr (/\) top [f (x, y) --> f (y, x) | x <- universe, y <- universe, all (`elem` u) [(x, y), (y, x)]]
     where universe = universeToList u
 
 
@@ -74,7 +75,7 @@ An 'LRelation' is transitive if \(tra \: rel =\) 'top'
 tra :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 tra (LRelation f u) =
     foldr (/\) top [f (x, y) /\ f (y, z) --> f (x, z) |
-                      x <- universe, y <- universe, z <- universe, (x, y) `elem` u && (y, z) `elem` u && (x, z) `elem` u]
+                      x <- universe, y <- universe, z <- universe, all (`elem` u) [(x, y), (y, x), (x, z)]]
     where universe = universeToList u
 
 
@@ -112,5 +113,5 @@ An 'LRelation' is asymmetric if \(asym \: rel =\) 'top'
 -}
 asym :: (Eq a,ResiduatedLattice l) => LRelation a l -> l
 asym (LRelation f u) =
-    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe, (x, y) `elem` u && (y, x) `elem` u]
+    foldr (/\) top [f (x, y) --> negation (f (y, x)) | x <- universe, y <- universe, all (`elem` u) [(x, y), (y, x)]]
     where universe = universeToList u
