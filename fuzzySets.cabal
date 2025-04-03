@@ -2,7 +2,7 @@ cabal-version:      2.4
 name:               fuzzySets
 version:            0.1.0.0
 category:           Math
-license:            MIT
+license:            BSD-3-Clause
 author:             Lukas Balog <lukasbalog66@gmail.com>
 maintainer:         Lukas Balog <lukasbalog66@gmail.com>
 homepage:           https://github.com/luckyluke66/L-Sets
