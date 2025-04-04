@@ -97,7 +97,7 @@ The parameters `p`, `r`, and `threshold` control the behavior of the modifier.
 -}
 modifierFunction :: (ResiduatedLattice l) => Double -> Double -> Double -> (l -> l)
 modifierFunction p r threshold a
-    | realToFrac a < threshold = mkLattice $ threshold ** (1 - p) * realToFrac a ** p
+    | realToFrac a < threshold = mkLattice $ threshold ** (1 - p) * (realToFrac a ** p)
     | realToFrac a >= threshold = mkLattice $ 1 - (1 - threshold) ** (1 - r) * (1 - realToFrac a) ** r
 
 
