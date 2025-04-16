@@ -1,6 +1,6 @@
 cabal-version:      2.4
 name:               fuzzySets
-version:            0.1.0.0
+version:            1.0.0
 category:           Math
 license:            BSD-3-Clause
 author:             Lukas Balog <lukasbalog66@gmail.com>
@@ -47,7 +47,7 @@ library
         Utils.Utils
     
     build-depends:    
-        base,
+        base >=4.14 && < 4.17,
 
     default-extensions:
         InstanceSigs

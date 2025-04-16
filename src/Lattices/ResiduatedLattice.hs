@@ -38,7 +38,7 @@ type Nat = Int
 -- a '\/' (a '/\' b) ≡ a
 -- a '/\' (a '\/' b) ≡ a
 -- @
-class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l where
+class RealFrac l => BoundedLattice l where
     -- | meet
     (/\) :: l -> l -> l
     -- | join
@@ -49,7 +49,6 @@ class (Eq l, Ord l, Num l, Real l, RealFrac l, Fractional l) => BoundedLattice l
     bot :: l
     -- | constructor for lattice
     mkLattice :: Double -> l
-    -- proc jsou tam vsechny classy? 
 
 -- | A bounded lattice with additional laws and operations namely --> and tnorm
 --
