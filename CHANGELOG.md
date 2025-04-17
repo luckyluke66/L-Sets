@@ -1,5 +1,5 @@
 # Revision history for fuzzySets
 
-## 0.1.0.0 -- YYYY-mm-dd
+## 1.0.0 -- 2025-04-17
 
-* First version. Released on an unsuspecting world.
+* First version.
