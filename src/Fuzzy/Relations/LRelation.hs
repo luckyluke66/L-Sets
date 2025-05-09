@@ -12,7 +12,7 @@ module Fuzzy.Relations.LRelation (
     mkEmptyRel,
     mkSingletonRel,
     mkUniversalRel, 
-    toPairs
+    toList
 ) where
 
 import Lattices.ResiduatedLattice
@@ -121,5 +121,5 @@ mkUniversalRel u = LRelation (const top) (listToUniverse u)
 
 
 -- | Return relation as a list of pairs
-toPairs :: (ResiduatedLattice l, Eq a) => LRelation a l -> [((a, a), l)]
-toPairs (LRelation f u) = [(x, f x) | x <- u]
+toList :: (ResiduatedLattice l, Eq a) => LRelation a l -> [((a, a), l)]
+toList (LRelation f u) = [(x, f x) | x <- u]

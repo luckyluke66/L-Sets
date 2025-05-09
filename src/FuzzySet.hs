@@ -49,7 +49,7 @@ mkUniversalSet = mkFuzzySet (const top)
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.1), (2, 0.2), (3. 0.4)]
+>>> let set = fromList [(1, 0.1), (2, 0.2), (3. 0.4)]
 >>> alphaCut 0.15 set 
 [2, 3]
 
@@ -71,16 +71,16 @@ alphaCut alpha set = [x | x <- u, f x >= alpha]
 
 ==== __Examples__
 
->>> let set1 = fromPairs [(1, 0.2), (2, 0.7), (3, 0.1)] :: LSet Int UILukasiewicz 
->>> let set2 = fromPairs [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz 
->>> let set3 = fromPairs [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
->>> toPairs $ union set1 set2
+>>> let set1 = fromList [(1, 0.2), (2, 0.7), (3, 0.1)] :: LSet Int UILukasiewicz 
+>>> let set2 = fromList [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz 
+>>> let set3 = fromList [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
+>>> toList $ union set1 set2
 [(1, 0.3),(2, 0.7), (3, 0.1)]
 
->>> toPairs $ union set1 set3
+>>> toList $ union set1 set3
 [(1, 0.5), (2, 0.7), (3, 0.1), (4, 0.8)]
 
->>> toPairs $ union set1 mkEmptySet
+>>> toList $ union set1 mkEmptySet
 [(1, 0.2), (2, 0.7), (3, 0.1)]
 -}
 union :: (FuzzySet set a l) => set -> set -> set
@@ -99,16 +99,16 @@ unions sets@(set:_) = foldr union (mkUniversalSet (universe set)) sets
 
 ==== __Examples__
 
->>> let set1 = fromPairs [(1, 0.2), (2, 0.7), (3, 0.1)]
->>> let set2 = fromPairs [(1, 0.3), (2, 0.4)]
->>> let set3 = fromPairs [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
->>> toPairs $ intersection set1 set2
+>>> let set1 = fromList [(1, 0.2), (2, 0.7), (3, 0.1)]
+>>> let set2 = fromList [(1, 0.3), (2, 0.4)]
+>>> let set3 = fromList [(1, 0.5), (2, 0.1), (4, 0.8)] :: LSet Int UILukasiewicz
+>>> toList $ intersection set1 set2
 [(1, 0.2), (2, 0.4), (3, 0.0)]
 
->>> toPairs $ intersection set1 set3
+>>> toList $ intersection set1 set3
 [(1, 0.2), (2, 0.1), (3, 0.0), (4, 0.0)]
 
->>> toPairs $ intersection set1 mkEmptySet
+>>> toList $ intersection set1 mkEmptySet
 [(1, 0.0), (2, 0.0), (3, 0.0)]
 -}
 intersection :: (FuzzySet set a l) => set -> set -> set
@@ -125,12 +125,12 @@ intersections = foldr intersection mkEmptySet
 
 ==== __Examples__
 
->>> let set1 = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
->>> toPairs $ complement set1
+>>> let set1 = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> toList $ complement set1
 [(1, 0.8),(2, 0.3)]
 
->>> let set2 = fromPairs [(1, 1), (2, 1)]
->>> toPairs $ complement set2
+>>> let set2 = fromList [(1, 1), (2, 1)]
+>>> toList $ complement set2
 [(1, 0), (2, 0)]
 -}
 complement :: (FuzzySet set a l) => set -> set
@@ -142,9 +142,9 @@ complement set = mkFuzzySet (negation . f)  (universe set)
 
 ==== __Examples__
 
->>> let set1 = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
->>> let set2 = fromPairs [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz
->>> toPairs $ setTnorm set1 set2
+>>> let set1 = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let set2 = fromList [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz
+>>> toList $ setTnorm set1 set2
 [(1,0.2), (2,0.4)]
 -}
 setTnorm :: (FuzzySet set a l) => set -> set -> set
@@ -158,9 +158,9 @@ setTnorm set1 set2 = mkFuzzySet (\x -> f x `tnorm` g x) u
 
 ==== __Examples__
 
->>> let set1 = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
->>> let set2 = fromPairs [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz
->>> toPairs $ setResiduum set1 set2
+>>> let set1 = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let set2 = fromList [(1, 0.3), (2, 0.4)] :: LSet Int UILukasiewicz
+>>> toList $ setResiduum set1 set2
 [(1,1.0), (2,0.7)]
 -} 
 setResiduum :: (FuzzySet set a l) => set -> set -> set
@@ -174,9 +174,9 @@ setResiduum set1 set2 = mkFuzzySet (\x -> f x --> g x) u
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let set = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> let modifiedSet = mapMembership set (\x -> x + 1)
->>> toPairs modifiedSet
+>>> toList modifiedSet
 [(1,0.0),(2,0.0),(3,0.2)]
 -}
 mapMembership :: (FuzzySet set a l) => set -> (a -> a) -> set
@@ -190,9 +190,9 @@ mapMembership set g = mkFuzzySet (f . g) u
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.2), (2, 0.7), (3, 0.4)] :: LSet Int UILukasiewicz
+>>> let set = fromList [(1, 0.2), (2, 0.7), (3, 0.4)] :: LSet Int UILukasiewicz
 >>> let filteredSet = filterMembership set (\x -> x > 1)
->>> toPairs filteredSet
+>>> toList filteredSet
 [(1,0.0),(2,0.7),(3,0.4)]
 -}
 filterMembership :: (FuzzySet set a l) => set -> (a -> Bool) -> set
@@ -207,9 +207,9 @@ filterMembership set pred =  mkFuzzySet h u
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let set = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> let modifiedSet = mapU set (\x -> x * 2)
->>> toPairs modifiedSet
+>>> toList modifiedSet
 [(2,0.2),(4,0.7)]
 -}
 mapU :: (FuzzySet set a l) => set -> (a -> a) -> set
@@ -223,9 +223,9 @@ mapU set g = mkFuzzySet f u
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 0.2), (2, 0.7), (3, 0.4)] :: LSet Int UILukasiewicz
+>>> let set = fromList [(1, 0.2), (2, 0.7), (3, 0.4)] :: LSet Int UILukasiewicz
 >>> let filteredSet = filterU set (\x -> x > 1)
->>> toPairs filteredSet
+>>> toList filteredSet
 [(2,0.7),(3,0.4)]
 -}
 filterU :: (FuzzySet set a l) => set -> (a -> Bool) -> set

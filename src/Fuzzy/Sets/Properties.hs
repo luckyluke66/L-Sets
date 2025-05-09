@@ -25,7 +25,7 @@ import FuzzySet
 >>> isEmpty emptySet
 True
 
->>> let nonEmptySet = fromPairs [(1, 0.2), (2, 0.0)] :: LSet Int UILukasiewicz
+>>> let nonEmptySet = fromList [(1, 0.2), (2, 0.0)] :: LSet Int UILukasiewicz
 >>> isEmpty nonEmptySet
 False
 -}
@@ -42,7 +42,7 @@ one `u` in 'universe' for which 'member' u is greater than 'bot'.
 >>> isSingleton singletonSet
 True
 
->>> let nonSingletonSet = fromPairs [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let nonSingletonSet = fromList [(1, 0.2), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> isSingleton nonSingletonSet
 False
 -}
@@ -54,11 +54,11 @@ isSingleton set = length (filter (> bot) (truthDegrees set)) == 1
 
 ==== __Examples__
 
->>> let crispSet = fromPairs [(1, 1.0), (2, 0.0)] :: LSet Int UILukasiewicz
+>>> let crispSet = fromList [(1, 1.0), (2, 0.0)] :: LSet Int UILukasiewicz
 >>> isCrisp crispSet
 True
 
->>> let nonCrispSet = fromPairs [(1, 0.5), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let nonCrispSet = fromList [(1, 0.5), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> isCrisp nonCrispSet
 False
 -}
@@ -77,7 +77,7 @@ This means that the fuzzy set equals its universe.
 >>> isUniversal universalSet
 True
 
->>> let nonUniversalSet = fromPairs [(1, 1.0), (2, 0.8)] :: LSet Int UILukasiewicz
+>>> let nonUniversalSet = fromList [(1, 1.0), (2, 0.8)] :: LSet Int UILukasiewicz
 >>> isUniversal nonUniversalSet
 False
 -} 
@@ -96,7 +96,7 @@ height _ = top
 
 {- | Support is a list of all elements with non 'bot' 'member' 
 
->>> let set = fromPairs [(1, 0), (2, 0.8), (3, 0), (4, 0.5), (6, 0)]
+>>> let set = fromList [(1, 0), (2, 0.8), (3, 0), (4, 0.5), (6, 0)]
 [2, 4] 
 -}
 support :: (FuzzySet set a l) => set -> [a]
@@ -110,7 +110,7 @@ In other words it's a list of items with 'member' equal to 'top'
 
 ==== __Examples__
 
->>> let set = fromPairs [(1, 1:0), (2, 0.8), (3, 1.0), (4, 0.5), (6, 1.0)]
+>>> let set = fromList [(1, 1:0), (2, 0.8), (3, 1.0), (4, 0.5), (6, 1.0)]
 >>> core set
 [1, 3, 6]
 
@@ -125,8 +125,8 @@ Membership of values from A is smaller than B for every item of universe
 
 ==== __Examples__
 
->>> let setA = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
->>> let setB = fromPairs [(1, 0.3), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let setA = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setB = fromList [(1, 0.3), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> strictSubsethood setA setB
 True
 
@@ -142,12 +142,12 @@ Member of all values from universe in set A is equal to member of all values in 
 
 ==== __Examples__
 
->>> let setA = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
->>> let setB = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setA = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setB = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
 >>> strictEquality setA setB
 True
 
->>> let setC = fromPairs [(1, 0.3), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setC = fromList [(1, 0.3), (2, 0.5)] :: LSet Int UILukasiewicz
 >>> strictEquality setA setC
 False
 -}
@@ -160,8 +160,8 @@ If the result is 1, we can conclude that A ⊆ B.
 
 ==== __Examples__
 
->>> let setA = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
->>> let setB = fromPairs [(1, 0.3), (2, 0.7)] :: LSet Int UILukasiewicz
+>>> let setA = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setB = fromList [(1, 0.3), (2, 0.7)] :: LSet Int UILukasiewicz
 >>> gradedSubsethood setA setB
 1.0
 
@@ -181,12 +181,12 @@ If the result is 1, the fuzzy sets are equal.
 
 ==== __Examples__
 
->>> let setA = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
->>> let setB = fromPairs [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setA = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setB = fromList [(1, 0.2), (2, 0.5)] :: LSet Int UILukasiewicz
 >>> gradedEquality setA setB
 1.0
 
->>> let setC = fromPairs [(1, 0.3), (2, 0.5)] :: LSet Int UILukasiewicz
+>>> let setC = fromList [(1, 0.3), (2, 0.5)] :: LSet Int UILukasiewicz
 >>> gradedEquality setA setC
 0.9
 -}

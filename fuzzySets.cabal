@@ -1,6 +1,6 @@
 cabal-version:      2.4
 name:               fuzzySets
-version:            1.0.0
+version:            1.0.1
 category:           Math
 license:            BSD-3-Clause
 author:             Lukas Balog <lukasbalog66@gmail.com>
