@@ -6,7 +6,6 @@ module Lattices.UnitInterval(
 ) where
 
 import Lattices.ResiduatedLattice
-import Data.Ord (clamp)
 
 -- | unit interval on real numbers [0,1]
 newtype UnitInterval = UnitInterval Double 
@@ -24,4 +23,4 @@ instance Show UnitInterval where
 
 -- | Unit interval constructor. Ensures values are in bounds
 mkUnitInterval :: Double -> UnitInterval
-mkUnitInterval x = UnitInterval $ clamp (0, 1) x
+mkUnitInterval x = UnitInterval $ max 0 $ min x 1
