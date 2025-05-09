@@ -15,19 +15,19 @@ pairs = zip [1..10] (map mkGodelUnitInterval [0..1])
 
 lsetTests :: TestTree
 lsetTests = testGroup "LSet Tests" [
-    testCase "fromPairs toPairs identity" $ assertEqual "" ((toPairs . fromPairs) pairs) pairs,
-    testCase "fromPairs creates correct LSet" testFromPairs,
+    testCase "fromList toList identity" $ assertEqual "" ((toList . fromList) pairs) pairs,
+    testCase "fromList creates correct LSet" testfromList,
     testCase "fromFunction creates correct LSet" testFromFunction,
-    testCase "toPairs converts LSet to correct list of pairs" testToPairs
+    testCase "toList converts LSet to correct list of pairs" testtoList
     ]
 
-testFromPairs :: Assertion
-testFromPairs = do
+testfromList :: Assertion
+testfromList = do
     let pairs = [(1, 0.5), (2, 0.8)]
-        lset = fromPairs pairs :: LSet Int UIGodel
-    assertEqual "fromPairs membership function" (member lset 1) 0.5
-    assertEqual "fromPairs membership function" (member lset 2) 0.8
-    assertEqual "fromPairs universe" (universe lset) [1, 2]
+        lset = fromList pairs :: LSet Int UIGodel
+    assertEqual "fromList membership function" (member lset 1) 0.5
+    assertEqual "fromList membership function" (member lset 2) 0.8
+    assertEqual "fromList universe" (universe lset) [1, 2]
 
 testFromFunction :: Assertion
 testFromFunction = do
@@ -38,10 +38,10 @@ testFromFunction = do
     assertEqual "fromFunction membership function" (member lset 2) 0.8
     assertEqual "fromFunction universe" (universe lset) [1, 2]
 
-testToPairs :: Assertion
-testToPairs = do
+testtoList :: Assertion
+testtoList = do
     let f x = if x == 1 then 0.5 else 0.8
         u = [1, 2]
         lset = fromFunction f u :: LSet Int UIGodel
-        pairs = toPairs lset
-    assertEqual "toPairs result" pairs [(1, 0.5), (2, 0.8)]
+        pairs = toList lset
+    assertEqual "toList result" pairs [(1, 0.5), (2, 0.8)]

@@ -5,7 +5,7 @@
 module Fuzzy.Sets.LSet(
     LSet(LSet),
     FuzzySet(member, universe),
-    fromPairs,
+    fromList,
     fromFunction,
     toList,
     mkEmptySet,
@@ -44,8 +44,8 @@ instance (ResiduatedLattice l, Eq a) => FuzzySet (LSet a l) a l where
 
 
 -- | Construct fuzzy set from list of pairs
-fromPairs :: (ResiduatedLattice l, Eq a) => [(a, l)] -> LSet a l
-fromPairs xs = LSet f u
+fromList :: (ResiduatedLattice l, Eq a) => [(a, l)] -> LSet a l
+fromList xs = LSet f u
     where
         f x = fromMaybe bot (lookup x xs)
         u = map fst xs
